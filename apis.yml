@@ -13,10 +13,10 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/geoapify/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 tags:
-  - Geospatial
-  - Maps
   - Geocoding
+  - Geospatial
   - Location
+  - Maps
 apis:
   - aid: geoapify:map-tiles
     name: Map Tiles API
