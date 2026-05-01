@@ -16,7 +16,7 @@ Geoapify Location Platform APIs for location-based services and mapping solution
 ## Timestamps
 
 - **Created:** 2024-01-01 
-- **Modified:** 2026-03-16 
+- **Modified:** 2026-04-28 
 
 ## APIs
 
@@ -61,6 +61,7 @@ Convert addresses into geographic coordinates.
 #### Properties
 
 - [Documentation](https://apidocs.geoapify.com/addresses-location/forward-geocoding-api)
+- [OpenAPI](openapi/geoapify-forward-geocoding-api-openapi.yml)
 
 ### Reverse Geocoding API
 Convert geographic coordinates into addresses.
