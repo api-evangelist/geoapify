@@ -1,0 +1,254 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Geoapify
+providerId: geoapify
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Maps
+  - Geocoding
+  - Routing
+description: Geoapify daily-credit-based plans across Free / API 10 / 25 / 50 / 100 / 250 / Custom.
+sources:
+  - https://www.geoapify.com/pricing
+plans:
+  - id: geoapify-free
+    name: Free
+    type: freemium
+    description: $0; 3,000 credits/day; up to 5 req/sec.
+    entries:
+      - label: Credits/day
+        name: credits
+        type: quota
+        metric: credit
+        limit: 3000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Requests/second
+        name: rps
+        type: quota
+        metric: rps
+        limit: 5
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Multiple API keys
+      - name: Limited commercial use
+      - name: Isochrones up to 15 min
+      - name: Best-effort support
+  - id: geoapify-api-10
+    name: API 10
+    type: paid
+    description: $59/month; 10,000 credits/day.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '59.00'
+        userMultiplied: false
+      - label: Credits/day
+        name: credits
+        type: quota
+        metric: credit
+        limit: 10000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Requests/second
+        name: rps
+        type: quota
+        metric: rps
+        limit: 12
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Commercial use
+      - name: Isochrones 30 min
+      - name: Email support
+  - id: geoapify-api-25
+    name: API 25
+    type: paid
+    description: $109/month; 25,000 credits/day.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '109.00'
+        userMultiplied: false
+      - label: Credits/day
+        name: credits
+        type: quota
+        metric: credit
+        limit: 25000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Requests/second
+        name: rps
+        type: quota
+        metric: rps
+        limit: 15
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Commercial use
+  - id: geoapify-api-50
+    name: API 50
+    type: paid
+    description: $179/month; 50,000 credits/day.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '179.00'
+        userMultiplied: false
+      - label: Credits/day
+        name: credits
+        type: quota
+        metric: credit
+        limit: 50000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Requests/second
+        name: rps
+        type: quota
+        metric: rps
+        limit: 20
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Isochrones 60 min
+      - name: Priority support
+  - id: geoapify-api-100
+    name: API 100
+    type: paid
+    description: $299/month; 100,000 credits/day.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '299.00'
+        userMultiplied: false
+      - label: Credits/day
+        name: credits
+        type: quota
+        metric: credit
+        limit: 100000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Requests/second
+        name: rps
+        type: quota
+        metric: rps
+        limit: 25
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Priority support
+  - id: geoapify-api-250
+    name: API 250
+    type: paid
+    description: $609/month; 250,000 credits/day.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '609.00'
+        userMultiplied: false
+      - label: Credits/day
+        name: credits
+        type: quota
+        metric: credit
+        limit: 250000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Requests/second
+        name: rps
+        type: quota
+        metric: rps
+        limit: 30
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Priority support
+  - id: geoapify-custom
+    name: Custom
+    type: enterprise
+    description: From $860/month; unmetered credits/day.
+    entries:
+      - label: Monthly minimum
+        name: monthly_min
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '860.00'
+        userMultiplied: false
+    elements:
+      - name: Unmetered API requests
+      - name: Isochrones 120 min
+      - name: Dedicated endpoint + servers
+      - name: Priority support

@@ -1,16 +1,13 @@
 aid: geoapify
 name: Geoapify
-description: >-
-  Geoapify Location Platform APIs for location-based services and mapping
-  solutions.
+description: Geoapify Location Platform APIs for location-based services and mapping solutions.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-01-01'
-modified: '2026-04-28'
+modified: '2026-05-04'
 position: Consumer
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/geoapify/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/geoapify/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 tags:
   - Geocoding
@@ -131,6 +128,27 @@ common:
     url: https://www.geoapify.com/terms
   - type: Privacy Policy
     url: https://www.geoapify.com/privacy
+  - type: Features
+    data:
+      - 'Free: 3K credits/day, 5 RPS, limited commercial use'
+      - 'API 10: $59/mo, 10K credits/day, 12 RPS'
+      - 'API 25: $109/mo, 25K credits/day, 15 RPS'
+      - 'API 50: $179/mo, 50K credits/day, 20 RPS'
+      - 'API 100: $299/mo, 100K credits/day, 25 RPS'
+      - 'API 250: $609/mo, 250K credits/day, 30 RPS'
+      - 'Custom from $860/mo: unmetered, dedicated endpoint'
+      - Geocoding API (forward + reverse)
+      - Routing API (driving, walking, cycling, truck)
+      - Isochrones up to 15-120 min by tier
+      - Place Details API
+      - Map Tiles API
+      - Address Autocomplete
+      - Static Maps API
+      - Boundaries API
+      - OpenStreetMap-based data with global coverage
+    sources:
+      - https://www.geoapify.com/pricing
+    updated: '2026-05-04'
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
