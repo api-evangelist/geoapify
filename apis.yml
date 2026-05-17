@@ -122,11 +122,11 @@ common:
     url: https://www.geoapify.com/
   - type: Documentation
     url: https://apidocs.geoapify.com/
-  - type: Sign Up
+  - type: SignUp
     url: https://myprojects.geoapify.com/register
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://www.geoapify.com/terms
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://www.geoapify.com/privacy
   - type: Features
     data:
