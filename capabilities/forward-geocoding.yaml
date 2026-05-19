@@ -1,32 +1,41 @@
 naftiko: 1.0.0-alpha2
 info:
   label: Geoapify Forward Geocoding API
-  description: Geoapify's Forward Geocoding API for searching addresses worldwide. This API accepts both structured and free-form
-    addresses and returns results in JSON, GeoJSON, or XML formats.
+  description: 'Geoapify Forward Geocoding API. 1 operations. Lead operation: Forward Geocoding. Self-contained Naftiko capability
+    covering one Geoapify business surface.'
   tags:
   - Geoapify
-  - API
-  created: '2026-05-06'
-  modified: '2026-05-06'
+  - Geoapify Forward Geocoding API
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GEOAPIFY_API_KEY: GEOAPIFY_API_KEY
 capability:
   consumes:
   - type: http
-    namespace: geoapify
+    namespace: forward-geocoding
     baseUri: https://api.geoapify.com/v1
-    description: Geoapify Forward Geocoding API HTTP API.
+    description: Geoapify Forward Geocoding API business capability. Self-contained, no shared references.
     resources:
     - name: geocode-search
       path: /geocode/search
       operations:
-      - name: get-geocode-search
+      - name: get
         method: GET
         description: Forward Geocoding
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
         inputParameters:
         - name: apiKey
           in: query
           type: string
-          required: true
           description: Your API key for accessing the Geoapify API.
+          required: true
         - name: text
           in: query
           type: string
@@ -83,40 +92,54 @@ capability:
           in: query
           type: string
           description: Response format.
-        outputRawFormat: json
-        outputParameters:
-        - name: result
-          type: object
-          value: $.
   exposes:
   - type: rest
+    namespace: forward-geocoding-rest
     port: 8080
-    namespace: geoapify-rest
-    description: REST adapter for Geoapify Forward Geocoding API.
+    description: REST adapter for Geoapify Forward Geocoding API. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
     resources:
-    - path: /geocode/search
-      name: get-geocode-search
+    - path: /v1/geocode/search
+      name: geocode-search
+      description: REST surface for geocode-search.
       operations:
       - method: GET
-        name: get-geocode-search
+        name: get
         description: Forward Geocoding
-        call: geoapify.get-geocode-search
+        call: forward-geocoding.get
+        with:
+          apiKey: rest.apiKey
+          text: rest.text
+          name: rest.name
+          housenumber: rest.housenumber
+          street: rest.street
+          postcode: rest.postcode
+          city: rest.city
+          state: rest.state
+          country: rest.country
+          type: rest.type
+          lang: rest.lang
+          limit: rest.limit
+          filter: rest.filter
+          bias: rest.bias
+          format: rest.format
         outputParameters:
         - type: object
           mapping: $.
   - type: mcp
+    namespace: forward-geocoding-mcp
     port: 9090
-    namespace: geoapify-mcp
     transport: http
-    description: MCP adapter for Geoapify Forward Geocoding API for AI agent use.
+    description: MCP adapter for Geoapify Forward Geocoding API. One tool per consumed operation, routed inline through this
+      capability's consumes block.
     tools:
-    - name: get-geocode-search
+    - name: forward-geocoding
       description: Forward Geocoding
       hints:
         readOnly: true
         destructive: false
         idempotent: true
-      call: geoapify.get-geocode-search
+      call: forward-geocoding.get
       with:
         apiKey: tools.apiKey
         text: tools.text
@@ -133,53 +156,6 @@ capability:
         filter: tools.filter
         bias: tools.bias
         format: tools.format
-      inputParameters:
-      - name: apiKey
-        type: string
-        description: Your API key for accessing the Geoapify API.
-        required: true
-      - name: text
-        type: string
-        description: Free-form address input.
-      - name: name
-        type: string
-        description: Amenity or place name as part of a structured address.
-      - name: housenumber
-        type: string
-        description: House number for a structured address.
-      - name: street
-        type: string
-        description: Street name for a structured address.
-      - name: postcode
-        type: string
-        description: Postal code or ZIP code.
-      - name: city
-        type: string
-        description: City name.
-      - name: state
-        type: string
-        description: State name.
-      - name: country
-        type: string
-        description: Country name.
-      - name: type
-        type: string
-        description: Location type filter to narrow down search by type.
-      - name: lang
-        type: string
-        description: Language code for the response (2-character ISO 639-1).
-      - name: limit
-        type: integer
-        description: Maximum number of results to return.
-      - name: filter
-        type: string
-        description: Filter results by location constraints (e.g., country, boundary).
-      - name: bias
-        type: string
-        description: Location bias to prioritize search results by proximity or area.
-      - name: format
-        type: string
-        description: Response format.
       outputParameters:
       - type: object
         mapping: $.
