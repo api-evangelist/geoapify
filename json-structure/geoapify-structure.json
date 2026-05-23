@@ -1,0 +1,18 @@
+{
+  "provider": "Geoapify",
+  "providerId": "geoapify",
+  "kind": "json-structure",
+  "description": "Structural overview of the Geoapify API surface; extracted from openapi/.",
+  "schemaCount": 0,
+  "operationCount": 1,
+  "schemas": [],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/geocode/search",
+      "operationId": null,
+      "summary": "Forward Geocoding",
+      "tags": []
+    }
+  ]
+}
