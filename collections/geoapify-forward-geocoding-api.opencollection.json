@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Geoapify Forward Geocoding API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Forward Geocoding",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.geoapify.com/v1/geocode/search",
+        "params": [
+          {
+            "name": "apiKey",
+            "value": "",
+            "type": "query",
+            "description": "Your API key for accessing the Geoapify API."
+          },
+          {
+            "name": "text",
+            "value": "",
+            "type": "query",
+            "description": "Free-form address input."
+          },
+          {
+            "name": "name",
+            "value": "",
+            "type": "query",
+            "description": "Amenity or place name as part of a structured address."
+          },
+          {
+            "name": "housenumber",
+            "value": "",
+            "type": "query",
+            "description": "House number for a structured address."
+          },
+          {
+            "name": "street",
+            "value": "",
+            "type": "query",
+            "description": "Street name for a structured address."
+          },
+          {
+            "name": "postcode",
+            "value": "",
+            "type": "query",
+            "description": "Postal code or ZIP code."
+          },
+          {
+            "name": "city",
+            "value": "",
+            "type": "query",
+            "description": "City name."
+          },
+          {
+            "name": "state",
+            "value": "",
+            "type": "query",
+            "description": "State name."
+          },
+          {
+            "name": "country",
+            "value": "",
+            "type": "query",
+            "description": "Country name."
+          },
+          {
+            "name": "type",
+            "value": "",
+            "type": "query",
+            "description": "Location type filter to narrow down search by type."
+          },
+          {
+            "name": "lang",
+            "value": "",
+            "type": "query",
+            "description": "Language code for the response (2-character ISO 639-1)."
+          },
+          {
+            "name": "limit",
+            "value": "",
+            "type": "query",
+            "description": "Maximum number of results to return."
+          },
+          {
+            "name": "filter",
+            "value": "",
+            "type": "query",
+            "description": "Filter results by location constraints (e.g., country, boundary)."
+          },
+          {
+            "name": "bias",
+            "value": "",
+            "type": "query",
+            "description": "Location bias to prioritize search results by proximity or area."
+          },
+          {
+            "name": "format",
+            "value": "",
+            "type": "query",
+            "description": "Response format."
+          }
+        ]
+      },
+      "docs": "Convert addresses into geographic coordinates using free-form or structured input."
+    }
+  ],
+  "bundled": true
+}
