@@ -118,6 +118,8 @@ apis:
       - type: Documentation
         url: https://apidocs.geoapify.com/reachability/isolines
 common:
+  - type: DomainSecurity
+    url: security/geoapify-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/geoapify
   - type: LinkedIn
@@ -155,6 +157,8 @@ common:
     updated: '2026-05-04'
   - type: LlmsText
     url: https://apidocs.geoapify.com/llms.txt
+  - type: Blog
+    url: https://www.geoapify.com/rss.xml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
