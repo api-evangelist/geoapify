@@ -5,7 +5,7 @@ type: Index
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-01-01'
-modified: '2026-05-19'
+modified: '2026-07-12'
 position: Consumer
 url: https://raw.githubusercontent.com/api-evangelist/geoapify/refs/heads/main/apis.yml
 specificationVersion: '0.19'
@@ -159,6 +159,12 @@ common:
     url: https://apidocs.geoapify.com/llms.txt
   - type: Blog
     url: https://www.geoapify.com/rss.xml
+  - name: MCP Server
+    url: https://api.geoapify.com/v1/mcp
+    type: MCPServer
+  - name: MCP Documentation
+    url: https://www.geoapify.com/mcp/
+    type: MCPDocumentation
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
