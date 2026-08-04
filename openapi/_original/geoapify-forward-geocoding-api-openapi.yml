@@ -1,0 +1,185 @@
+openapi: 3.0.1
+info:
+  title: Geoapify Forward Geocoding API
+  description: Geoapify's Forward Geocoding API for searching addresses worldwide. This API accepts both structured and free-form addresses and returns results in JSON, GeoJSON, or XML formats.
+  version: "1.0.0"
+  contact:
+    name: Geoapify Support
+    email: info@geoapify.com
+    url: https://www.geoapify.com/support
+
+servers:
+  - url: https://api.geoapify.com/v1
+
+paths:
+  /geocode/search:
+    get:
+      summary: Forward Geocoding
+      description: Convert addresses into geographic coordinates using free-form or structured input.
+      parameters:
+        - name: apiKey
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Your API key for accessing the Geoapify API.
+        - name: text
+          in: query
+          schema:
+            type: string
+          description: Free-form address input.
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: Amenity or place name as part of a structured address.
+        - name: housenumber
+          in: query
+          schema:
+            type: string
+          description: House number for a structured address.
+        - name: street
+          in: query
+          schema:
+            type: string
+          description: Street name for a structured address.
+        - name: postcode
+          in: query
+          schema:
+            type: string
+          description: Postal code or ZIP code.
+        - name: city
+          in: query
+          schema:
+            type: string
+          description: City name.
+        - name: state
+          in: query
+          schema:
+            type: string
+          description: State name.
+        - name: country
+          in: query
+          schema:
+            type: string
+          description: Country name.
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [country, state, city, postcode, street, amenity, locality]
+          description: Location type filter to narrow down search by type.
+        - name: lang
+          in: query
+          schema:
+            type: string
+          description: Language code for the response (2-character ISO 639-1).
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 5
+          description: Maximum number of results to return.
+        - name: filter
+          in: query
+          schema:
+            type: string
+          description: Filter results by location constraints (e.g., country, boundary).
+        - name: bias
+          in: query
+          schema:
+            type: string
+          description: Location bias to prioritize search results by proximity or area.
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [json, xml, geojson]
+            default: json
+          description: Response format.
+
+      responses:
+        "200":
+          description: Successful response with geocoding results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        datasource:
+                          type: object
+                          properties:
+                            sourcename: { type: string }
+                            attribution: { type: string }
+                            license: { type: string }
+                            url: { type: string }
+                        housenumber: { type: string }
+                        street: { type: string }
+                        suburb: { type: string }
+                        city: { type: string }
+                        county: { type: string }
+                        state: { type: string }
+                        postcode: { type: string }
+                        country: { type: string }
+                        country_code: { type: string }
+                        lon: { type: number, format: float }
+                        lat: { type: number, format: float }
+                        formatted: { type: string }
+                        address_line1: { type: string }
+                        address_line2: { type: string }
+                        state_code: { type: string }
+                        result_type: { type: string }
+                        rank:
+                          type: object
+                          properties:
+                            importance: { type: number, format: float }
+                            popularity: { type: number, format: float }
+                            confidence: { type: number, format: float }
+                            confidence_city_level: { type: number, format: float }
+                            confidence_street_level: { type: number, format: float }
+                            match_type: { type: string }
+                        timezone:
+                          type: object
+                          properties:
+                            name: { type: string }
+                            offset_STD: { type: string }
+                            offset_STD_seconds: { type: integer }
+                            offset_DST: { type: string }
+                            offset_DST_seconds: { type: integer }
+                            abbreviation_STD: { type: string }
+                            abbreviation_DST: { type: string }
+                        place_id: { type: string }
+            application/xml:
+              schema:
+                type: string
+                description: XML formatted response.
+
+        "400":
+          description: Bad Request, usually due to missing or invalid parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: { type: string, description: "Error message" }
+        "401":
+          description: Unauthorized, invalid API key.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: { type: string, description: "Unauthorized error message" }
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: { type: string, description: "Internal server error message" }
