@@ -20,7 +20,7 @@ created: '2024-01-01'
 modified: '2026-07-12'
 position: Consumer
 url: https://raw.githubusercontent.com/api-evangelist/geoapify/refs/heads/main/apis.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 tags:
   - Geocoding
   - Geospatial
