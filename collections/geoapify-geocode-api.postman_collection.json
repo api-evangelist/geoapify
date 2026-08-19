@@ -1,0 +1,547 @@
+{
+  "item": [
+    {
+      "id": "218e94ba-9c1d-4073-9b7d-f8dfb3cddf68",
+      "name": "Geocode",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "09fdc8ca-e1a5-42f0-b5a1-9848bd851957",
+          "name": "Forward Geocoding",
+          "request": {
+            "name": "Forward Geocoding",
+            "description": {
+              "content": "Convert addresses into geographic coordinates using free-form or structured input.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "geocode",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "apiKey",
+                  "value": "<string>",
+                  "description": "(Required) Your API key for accessing the Geoapify API."
+                },
+                {
+                  "disabled": false,
+                  "key": "text",
+                  "value": "<string>",
+                  "description": "Free-form address input."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Amenity or place name as part of a structured address."
+                },
+                {
+                  "disabled": false,
+                  "key": "housenumber",
+                  "value": "<string>",
+                  "description": "House number for a structured address."
+                },
+                {
+                  "disabled": false,
+                  "key": "street",
+                  "value": "<string>",
+                  "description": "Street name for a structured address."
+                },
+                {
+                  "disabled": false,
+                  "key": "postcode",
+                  "value": "<string>",
+                  "description": "Postal code or ZIP code."
+                },
+                {
+                  "disabled": false,
+                  "key": "city",
+                  "value": "<string>",
+                  "description": "City name."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "State name."
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "<string>",
+                  "description": "Country name."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Location type filter to narrow down search by type."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "<string>",
+                  "description": "Language code for the response (2-character ISO 639-1)."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "5",
+                  "description": "Maximum number of results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter results by location constraints (e.g., country, boundary)."
+                },
+                {
+                  "disabled": false,
+                  "key": "bias",
+                  "value": "<string>",
+                  "description": "Location bias to prioritize search results by proximity or area."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b79deaaf-cc45-4da3-8bf9-c616e9f294c5",
+              "name": "Successful response with geocoding results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocode",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "text",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "housenumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "street",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "city",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bias",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"datasource\": {\n        \"sourcename\": \"string\",\n        \"attribution\": \"string\",\n        \"license\": \"string\",\n        \"url\": \"string\"\n      },\n      \"housenumber\": \"string\",\n      \"street\": \"string\",\n      \"suburb\": \"string\",\n      \"city\": \"string\",\n      \"county\": \"string\",\n      \"state\": \"string\",\n      \"postcode\": \"string\",\n      \"country\": \"string\",\n      \"country_code\": \"string\",\n      \"lon\": 8573.959513119235,\n      \"lat\": 1926.0559632355123,\n      \"formatted\": \"string\",\n      \"address_line1\": \"string\",\n      \"address_line2\": \"string\",\n      \"state_code\": \"string\",\n      \"result_type\": \"string\",\n      \"rank\": {\n        \"importance\": 368.28136735258755,\n        \"popularity\": 4788.0288408851475,\n        \"confidence\": 8023.003469347006,\n        \"confidence_city_level\": 9212.64700068123,\n        \"confidence_street_level\": 5496.592038711233,\n        \"match_type\": \"string\"\n      },\n      \"timezone\": {\n        \"name\": \"string\",\n        \"offset_STD\": \"string\",\n        \"offset_STD_seconds\": 8782,\n        \"offset_DST\": \"string\",\n        \"offset_DST_seconds\": 3379,\n        \"abbreviation_STD\": \"string\",\n        \"abbreviation_DST\": \"string\"\n      },\n      \"place_id\": \"string\"\n    },\n    {\n      \"datasource\": {\n        \"sourcename\": \"string\",\n        \"attribution\": \"string\",\n        \"license\": \"string\",\n        \"url\": \"string\"\n      },\n      \"housenumber\": \"string\",\n      \"street\": \"string\",\n      \"suburb\": \"string\",\n      \"city\": \"string\",\n      \"county\": \"string\",\n      \"state\": \"string\",\n      \"postcode\": \"string\",\n      \"country\": \"string\",\n      \"country_code\": \"string\",\n      \"lon\": 4506.847037938314,\n      \"lat\": 8779.776107221895,\n      \"formatted\": \"string\",\n      \"address_line1\": \"string\",\n      \"address_line2\": \"string\",\n      \"state_code\": \"string\",\n      \"result_type\": \"string\",\n      \"rank\": {\n        \"importance\": 5888.182963070389,\n        \"popularity\": 9677.646515416363,\n        \"confidence\": 7812.7417133257395,\n        \"confidence_city_level\": 5336.0616166378595,\n        \"confidence_street_level\": 2140.6801496564276,\n        \"match_type\": \"string\"\n      },\n      \"timezone\": {\n        \"name\": \"string\",\n        \"offset_STD\": \"string\",\n        \"offset_STD_seconds\": 9620,\n        \"offset_DST\": \"string\",\n        \"offset_DST_seconds\": 9866,\n        \"abbreviation_STD\": \"string\",\n        \"abbreviation_DST\": \"string\"\n      },\n      \"place_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b73f75c2-d5f5-43b6-a9d1-20cdfbf24e84",
+              "name": "Bad Request, usually due to missing or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocode",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "text",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "housenumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "street",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "city",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bias",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3617d991-f5f8-4019-9233-bd4055f6e2f3",
+              "name": "Unauthorized, invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocode",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "text",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "housenumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "street",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "city",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bias",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bac5798-5963-4944-bf5b-62cace03d6a4",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "geocode",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "apiKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "text",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "housenumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "street",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "city",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bias",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.geoapify.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "665a4389-0a1c-458b-8b68-d0d4e817a920",
+    "name": "Geoapify Forward Geocoding Geocode API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Geoapify's Forward Geocoding API for searching addresses worldwide. This API accepts both structured and free-form addresses and returns results in JSON, GeoJSON, or XML formats.\n\nContact Support:\n Name: Geoapify Support\n Email: info@geoapify.com",
+      "type": "text/plain"
+    }
+  }
+}
