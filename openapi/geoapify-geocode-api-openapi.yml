@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Geoapify Forward Geocoding Geocode API
   description: Geoapify's Forward Geocoding API for searching addresses worldwide. This API accepts both structured and free-form addresses and returns results in JSON, GeoJSON, or XML formats.
@@ -240,3 +240,5 @@ paths:
                     description: Internal server error message
       tags:
       - Geocode
+      operationId: getGeocodeSearch
+      x-operation-id-source: derived
