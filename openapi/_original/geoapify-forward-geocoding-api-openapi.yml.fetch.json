@@ -1,0 +1,12 @@
+{
+ "url": "https://raw.githubusercontent.com/geoapify/geoapify-openapi-specs/HEAD/api-specs/forward-geocoding/forward-geocoding-api-openapi-specs.json",
+ "requested_url": "https://raw.githubusercontent.com/geoapify/geoapify-openapi-specs/HEAD/api-specs/forward-geocoding/forward-geocoding-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "text/plain; charset=utf-8",
+ "bytes": 60716,
+ "sha256": "3ccf6ac2d51a7c0167e9b7bd65b1991da81c3fb3428dd26dafd6b922e62f724c",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
