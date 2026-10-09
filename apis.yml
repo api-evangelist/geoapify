@@ -197,6 +197,8 @@ common:
   - name: MCP Documentation
     url: https://www.geoapify.com/mcp/
     type: MCPDocumentation
+  - type: SpectralRules
+    url: https://github.com/geoapify/geoapify-openapi-specs/blob/e8255e614648084d86bae2155c20347d5203ec1d/ruleset.spectral.yaml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

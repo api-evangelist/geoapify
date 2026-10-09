@@ -1,0 +1,10 @@
+# harvested from https://github.com/geoapify/geoapify-openapi-specs/blob/e8255e614648084d86bae2155c20347d5203ec1d/ruleset.spectral.yaml on 2026-10-09 — a Spectral ruleset published in the provider's own GitHub repository (geoapify/geoapify-openapi-specs); found by GitHub code search, fetched verbatim
+x-method: harvested
+x-stamped: 2026-10-09
+x-source-url: https://github.com/geoapify/geoapify-openapi-specs/blob/e8255e614648084d86bae2155c20347d5203ec1d/ruleset.spectral.yaml
+extends: [[spectral:oas, all]]
+rules:
+  # OpenAPI 3.1 uses the full JSON Schema 2020-12 array vocabulary, including
+  # prefixItems tuples and intentionally unconstrained arrays.
+  array-items: off
+  oas3-valid-media-example: off
