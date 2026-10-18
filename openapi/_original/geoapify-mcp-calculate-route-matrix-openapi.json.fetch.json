@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/calculate-route-matrix-openapi-spec.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/calculate-route-matrix-openapi-spec.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 29326,
+ "sha256": "5060b2d81531357f2f2953256c1a06d2878f6799764971cf2050855c554fed07",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

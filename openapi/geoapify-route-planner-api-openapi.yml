@@ -1,0 +1,1395 @@
+openapi: 3.2.0
+info:
+  title: Geoapify Route Planner API
+  version: 1.1.0
+  description: Assign jobs and pickup-delivery shipments to agents and optimize their routes and schedules.
+servers:
+- url: https://api.geoapify.com/v1
+  description: Default API endpoint.
+- url: https://api-eu.geoapify.com/v1
+  description: EU-focused endpoint. Geoapify service processing uses EU infrastructure.
+security:
+- ApiKeyInQuery: []
+- ApiKeyInHeader: []
+tags:
+- name: Route Planner
+paths:
+  /routeplanner:
+    post:
+      tags:
+      - Route Planner
+      operationId: planRoutes
+      summary: Optimize jobs and shipments across agents
+      description: 'Optimizes jobs and pickup-delivery shipments across one or more agents.
+
+
+        - Send `mode`, `agents`, and at least one non-empty `jobs` or `shipments` array in a JSON body.
+
+        - Coordinates use GeoJSON order: `[longitude, latitude]`; reusable entries in `locations` can be referenced by index.
+
+        - Agent capabilities must satisfy task requirements; capacities, priorities, durations, time windows, and breaks constrain assignment and order.
+
+        - A regular API call supports up to 300 unique coordinates across locations, agents, jobs, and shipments.
+
+        - Each returned GeoJSON feature is one agent plan with actions, waypoints, route legs, timing, distance, and `MultiLineString` geometry.
+
+        - Unassigned agents, jobs, or shipments are reported in `properties.issues` when the complete task cannot be assigned.
+
+
+        **Example:** optimize 73 pickup-delivery shipments across three passenger-car agents with `mode=drive`.'
+      requestBody:
+        required: true
+        description: Route optimization task. The request body must be JSON. The compact example uses one agent, one job, and one shipment to demonstrate the request structure.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutePlannerRequest'
+            example:
+              mode: drive
+              type: balanced
+              traffic: free_flow
+              agents:
+              - id: courier-1
+                start_location_index: 0
+                capabilities:
+                - refrigerated
+                time_windows:
+                - - 0
+                  - 14400
+              jobs:
+              - id: service-1
+                location:
+                - -120.4557
+                - 34.635
+                duration: 300
+                time_windows:
+                - - 600
+                  - 3600
+              shipments:
+              - id: order-1
+                pickup:
+                  location_index: 0
+                  duration: 120
+                delivery:
+                  location:
+                  - -120.4392
+                  - 34.6493
+                  duration: 180
+                requirements:
+                - refrigerated
+              locations:
+              - id: depot
+                location:
+                - -120.45758
+                - 34.6500314
+              avoid: []
+      responses:
+        '200':
+          description: Optimized plan. Each GeoJSON feature represents one assigned agent route; collection properties contain normalized task parameters and any assignment issues. The example route coordinates are intentionally simplified to demonstrate the GeoJSON MultiLineString and planner result structure. Actual routes contain more detailed geometry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutePlannerResponse'
+              example:
+                type: FeatureCollection
+                properties:
+                  mode: drive
+                  params:
+                    mode: drive
+                    type: balanced
+                    traffic: free_flow
+                    locations:
+                    - id: depot
+                      location:
+                      - -120.45758
+                      - 34.6500314
+                    agents:
+                    - id: courier-1
+                      start_location_index: 0
+                      capabilities:
+                      - refrigerated
+                      time_windows:
+                      - - 0
+                        - 14400
+                    jobs:
+                    - id: service-1
+                      location:
+                      - -120.4557
+                      - 34.635
+                      duration: 300
+                      time_windows:
+                      - - 600
+                        - 3600
+                    shipments:
+                    - id: order-1
+                      pickup:
+                        location_index: 0
+                        duration: 120
+                      delivery:
+                        location:
+                        - -120.4392
+                        - 34.6493
+                        duration: 180
+                      requirements:
+                      - refrigerated
+                    avoid: []
+                  issues:
+                    unassigned_jobs: []
+                    unassigned_shipments: []
+                    unassigned_agents: []
+                features:
+                - type: Feature
+                  properties:
+                    agent_index: 0
+                    agent_id: courier-1
+                    mode: drive
+                    time: 1260
+                    start_time: 0
+                    end_time: 1260
+                    distance: 4200
+                    legs:
+                    - time: 360
+                      distance: 1800
+                      from_waypoint_index: 0
+                      to_waypoint_index: 1
+                      steps:
+                      - from_index: 0
+                        to_index: 2
+                        time: 360
+                        distance: 1800
+                    - time: 300
+                      distance: 2400
+                      from_waypoint_index: 1
+                      to_waypoint_index: 2
+                      steps:
+                      - from_index: 0
+                        to_index: 2
+                        time: 300
+                        distance: 2400
+                    actions:
+                    - index: 0
+                      type: start
+                      start_time: 0
+                      duration: 0
+                      location_index: 0
+                      location_id: depot
+                      waypoint_index: 0
+                    - index: 1
+                      type: pickup
+                      start_time: 0
+                      duration: 120
+                      shipment_index: 0
+                      shipment_id: order-1
+                      waypoint_index: 0
+                    - index: 2
+                      type: job
+                      start_time: 480
+                      duration: 300
+                      job_index: 0
+                      job_id: service-1
+                      waypoint_index: 1
+                    - index: 3
+                      type: delivery
+                      start_time: 1080
+                      duration: 180
+                      shipment_index: 0
+                      shipment_id: order-1
+                      waypoint_index: 2
+                    - index: 4
+                      type: end
+                      start_time: 1260
+                      duration: 0
+                      waypoint_index: 2
+                    waypoints:
+                    - original_location:
+                      - -120.45758
+                      - 34.6500314
+                      location:
+                      - -120.45758
+                      - 34.650031
+                      start_time: 0
+                      duration: 120
+                      actions:
+                      - index: 0
+                        type: start
+                        start_time: 0
+                        duration: 0
+                        waypoint_index: 0
+                      - index: 1
+                        type: pickup
+                        start_time: 0
+                        duration: 120
+                        shipment_index: 0
+                        shipment_id: order-1
+                        waypoint_index: 0
+                      original_location_index: 0
+                      original_location_id: depot
+                      next_leg_index: 0
+                    - original_location:
+                      - -120.4557
+                      - 34.635
+                      location:
+                      - -120.4557
+                      - 34.635
+                      start_time: 480
+                      duration: 300
+                      actions:
+                      - index: 2
+                        type: job
+                        start_time: 480
+                        duration: 300
+                        job_index: 0
+                        job_id: service-1
+                        waypoint_index: 1
+                      prev_leg_index: 0
+                      next_leg_index: 1
+                    - original_location:
+                      - -120.4392
+                      - 34.6493
+                      location:
+                      - -120.4392
+                      - 34.6493
+                      start_time: 1080
+                      duration: 180
+                      actions:
+                      - index: 3
+                        type: delivery
+                        start_time: 1080
+                        duration: 180
+                        shipment_index: 0
+                        shipment_id: order-1
+                        waypoint_index: 2
+                      - index: 4
+                        type: end
+                        start_time: 1260
+                        duration: 0
+                        waypoint_index: 2
+                      prev_leg_index: 1
+                  geometry:
+                    type: MultiLineString
+                    coordinates:
+                    - - - -120.45758
+                        - 34.650031
+                      - - -120.4565
+                        - 34.642
+                      - - -120.4557
+                        - 34.635
+                    - - - -120.4557
+                        - 34.635
+                      - - -120.448
+                        - 34.642
+                      - - -120.4392
+                        - 34.6493
+        '400':
+          description: Invalid optimization task or a task that exceeds Route Planner gateway limits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              examples:
+                missingAgents:
+                  summary: Missing required agents
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: '"agents" is required'
+                missingTasks:
+                  summary: Neither jobs nor shipments supplied
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: '"value" must contain at least one of [jobs, shipments]'
+                duplicateId:
+                  summary: Duplicate entity ID
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: Duplicate id in shipments
+                invalidLocationIndex:
+                  summary: Location index does not exist
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: Invalid location_index 1
+                tooManyLocations:
+                  summary: Too many unique coordinates
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: Too many location coordinates. Total amount of coordinates for locations, agents, jobs, and shipments should not exceed 300 for a regular API call, and 1000 for an asynchronous batch API call. Request contains 301 coordinates.
+                routeTooLong:
+                  summary: A location pair exceeds the travel-mode limit
+                  description: This example uses `walk`, which allows 100 km for regular calls and 200 km for asynchronous batch calls.
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: Too long distance between locations. Distance should not exceed 100000 meters for a regular API call, and 200000 meters for an asynchronous batch API call. Estimated distance is 250000 meter(s).
+                sumDistanceTooLong:
+                  summary: Estimated total distance is too large
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: Too long sum distance. Sum distance of all possible routes should not exceed 300000000 meters for a regular API call, and 1000000000 meters for an asynchronous batch API call. Estimated sum distance is 350000000 meter(s).
+        '401':
+          description: Missing or invalid Geoapify API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Invalid apiKey
+        '429':
+          description: Rate limit or quota exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 429
+                error: Too Many Requests
+                message: Quota exceeded
+        '500':
+          description: Internal gateway error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: Request failed, please try again later
+components:
+  schemas:
+    PlannerJob:
+      type: object
+      additionalProperties: false
+      oneOf:
+      - required:
+        - location
+      - required:
+        - location_index
+      allOf:
+      - not:
+          required:
+          - pickup_amount
+          - delivery_amount
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Optional unique job identifier.
+        location:
+          type: array
+          minItems: 2
+          maxItems: 2
+          prefixItems:
+          - type: number
+            minimum: -180
+            maximum: 180
+            description: Longitude.
+          - type: number
+            minimum: -90
+            maximum: 90
+            description: Latitude.
+          items: false
+          description: Job coordinate. Alternative to `location_index`.
+        location_index:
+          type: integer
+          minimum: 0
+          description: Zero-based index in `locations`. Alternative to `location`.
+        priority:
+          type: integer
+          minimum: 0
+          maximum: 100
+          default: 0
+          description: Assignment priority from 0 (lowest) to 100 (highest).
+        duration:
+          type: number
+          minimum: 0
+          default: 0
+          description: Service duration in seconds.
+        pickup_amount:
+          type: number
+          minimum: 0
+          description: Amount added to the agent pickup load.
+        delivery_amount:
+          type: number
+          minimum: 0
+          description: Amount removed from the agent delivery load.
+        requirements:
+          type: array
+          maxItems: 1000
+          uniqueItems: true
+          description: Capabilities an agent must have to perform the job.
+          items:
+            type: string
+            pattern: ^[A-Za-z0-9_. -]{1,100}$
+        time_windows:
+          type: array
+          maxItems: 10
+          description: Intervals in which an agent must reach the job.
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            prefixItems:
+            - type: number
+              minimum: 0
+              description: Interval start in relative seconds.
+            - type: number
+              minimum: 0
+              description: Interval end in relative seconds.
+            items: false
+        description:
+          type: string
+          maxLength: 1000
+          description: Optional human-readable job description.
+    RoutePlannerParamShipment:
+      type: object
+      required:
+      - pickup
+      - delivery
+      properties:
+        id:
+          type: string
+        pickup:
+          $ref: '#/components/schemas/RoutePlannerParamStop'
+        delivery:
+          $ref: '#/components/schemas/RoutePlannerParamStop'
+        priority:
+          type: number
+        amount:
+          type: number
+        requirements:
+          type: array
+          items:
+            type: string
+    JsonValue:
+      oneOf:
+      - type: string
+      - type: number
+      - type: boolean
+      - type: 'null'
+      - type: array
+        items:
+          $ref: '#/components/schemas/JsonValue'
+      - $ref: '#/components/schemas/JsonObject'
+    RoutePlannerIssues:
+      type: object
+      required: []
+      properties:
+        unassigned_shipments:
+          type: array
+          items:
+            type: integer
+        unassigned_agents:
+          type: array
+          items:
+            type: integer
+        unassigned_jobs:
+          type: array
+          items:
+            type: integer
+    LocationData:
+      type: object
+      required:
+      - lat
+      - lon
+      properties:
+        lat:
+          type: number
+          minimum: -90
+          maximum: 90
+        lon:
+          type: number
+          minimum: -180
+          maximum: 180
+        address:
+          type: string
+    RoutePlannerFeature:
+      type: object
+      required:
+      - type
+      - geometry
+      - properties
+      properties:
+        type:
+          const: Feature
+        geometry:
+          $ref: '#/components/schemas/MultiLineStringGeometry'
+        properties:
+          $ref: '#/components/schemas/RoutePlannerFeatureProperties'
+        id:
+          oneOf:
+          - type: string
+          - type: number
+        bbox:
+          type: array
+          minItems: 4
+          maxItems: 6
+          items:
+            type: number
+    RoutePlannerStep:
+      type: object
+      required:
+      - from_index
+      - to_index
+      - time
+      - distance
+      properties:
+        from_index:
+          type: integer
+        to_index:
+          type: integer
+        time:
+          type:
+          - number
+          - 'null'
+        distance:
+          type:
+          - number
+          - 'null'
+    Avoid:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - tolls
+          - ferries
+          - highways
+          - locations
+          - polygons
+          - green_zones
+          - country_codes
+          - transfers
+        importance:
+          type: number
+          minimum: 0
+          maximum: 1
+        values:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: array
+            items:
+              $ref: '#/components/schemas/LocationData'
+          - type: array
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/LocationData'
+    RoutePlannerFeatureCollection:
+      type: object
+      required:
+      - type
+      - features
+      - properties
+      properties:
+        type:
+          const: FeatureCollection
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerFeature'
+        bbox:
+          type: array
+          minItems: 4
+          maxItems: 6
+          items:
+            type: number
+        properties:
+          $ref: '#/components/schemas/RoutePlannerCollectionProperties'
+    RoutePlannerParamJob:
+      type: object
+      required: []
+      properties:
+        id:
+          type: string
+        location_index:
+          type: integer
+        location:
+          $ref: '#/components/schemas/LongitudeLatitude'
+        priority:
+          type: number
+        duration:
+          type: number
+        time_windows:
+          type: array
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            prefixItems:
+            - type: number
+            - type: number
+            items: false
+        delivery_amount:
+          type: number
+        pickup_amount:
+          type: number
+        requirements:
+          type: array
+          items:
+            type: string
+    RoutePlannerParamStop:
+      type: object
+      properties:
+        location_index:
+          type: integer
+        location:
+          $ref: '#/components/schemas/LongitudeLatitude'
+        duration:
+          type: number
+        time_windows:
+          type: array
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            prefixItems:
+            - type: number
+            - type: number
+            items: false
+      oneOf:
+      - required:
+        - location
+      - required:
+        - location_index
+    RoutePlannerDataError:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    RoutePlannerLeg:
+      type: object
+      required:
+      - time
+      - distance
+      - from_waypoint_index
+      - to_waypoint_index
+      - steps
+      properties:
+        time:
+          type:
+          - number
+          - 'null'
+        distance:
+          type:
+          - number
+          - 'null'
+        from_waypoint_index:
+          type: integer
+        to_waypoint_index:
+          type: integer
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerStep'
+    PlannerAgent:
+      type: object
+      additionalProperties: false
+      anyOf:
+      - required:
+        - start_location
+      - required:
+        - start_location_index
+      - required:
+        - end_location
+      - required:
+        - end_location_index
+      allOf:
+      - not:
+          required:
+          - start_location
+          - start_location_index
+      - not:
+          required:
+          - end_location
+          - end_location_index
+      - not:
+          required:
+          - pickup_capacity
+          - delivery_capacity
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Optional unique agent identifier.
+        start_location:
+          type: array
+          minItems: 2
+          maxItems: 2
+          prefixItems:
+          - type: number
+            minimum: -180
+            maximum: 180
+            description: Longitude.
+          - type: number
+            minimum: -90
+            maximum: 90
+            description: Latitude.
+          items: false
+          description: Agent start coordinate. Alternative to `start_location_index`.
+        end_location:
+          type: array
+          minItems: 2
+          maxItems: 2
+          prefixItems:
+          - type: number
+            minimum: -180
+            maximum: 180
+            description: Longitude.
+          - type: number
+            minimum: -90
+            maximum: 90
+            description: Latitude.
+          items: false
+          description: Optional agent end coordinate. Alternative to `end_location_index`.
+        start_location_index:
+          type: integer
+          minimum: 0
+          description: Zero-based index in `locations` for the agent start.
+        end_location_index:
+          type: integer
+          minimum: 0
+          description: Zero-based index in `locations` for the agent end.
+        pickup_capacity:
+          type: number
+          minimum: 0
+          description: Maximum amount the agent can pick up.
+        delivery_capacity:
+          type: number
+          minimum: 0
+          description: Maximum amount initially loaded for delivery.
+        capabilities:
+          type: array
+          maxItems: 1000
+          uniqueItems: true
+          description: Capabilities available to satisfy job or shipment `requirements`.
+          items:
+            type: string
+            pattern: ^[A-Za-z0-9_. -]{1,100}$
+        time_windows:
+          type: array
+          maxItems: 10
+          description: Agent availability windows in relative seconds.
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            prefixItems:
+            - type: number
+              minimum: 0
+              description: Interval start in relative seconds.
+            - type: number
+              minimum: 0
+              description: Interval end in relative seconds.
+            items: false
+        breaks:
+          type: array
+          maxItems: 10
+          description: Optional breaks scheduled within one of their allowed time windows.
+          items:
+            $ref: '#/components/schemas/PlannerBreak'
+        description:
+          type: string
+          maxLength: 1000
+          description: Optional human-readable agent description.
+    GatewayError:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code returned by the API gateway.
+        error:
+          type: string
+          description: Standard HTTP error name.
+        message:
+          type: string
+          description: Human-readable explanation of the error.
+    JsonObject:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/JsonValue'
+    LongitudeLatitude:
+      type: array
+      minItems: 2
+      maxItems: 2
+      prefixItems:
+      - type: number
+        minimum: -180
+        maximum: 180
+      - type: number
+        minimum: -90
+        maximum: 90
+      items: false
+    RoutePlannerAction:
+      type: object
+      required:
+      - index
+      - type
+      - start_time
+      - duration
+      properties:
+        index:
+          type: integer
+        type:
+          type: string
+          enum:
+          - start
+          - end
+          - job
+          - pickup
+          - delivery
+          - break
+        start_time:
+          type: number
+        duration:
+          type: number
+        location_index:
+          type: integer
+        location_id:
+          type: string
+        shipment_id:
+          type: string
+        shipment_index:
+          type: integer
+        job_id:
+          type: string
+        job_index:
+          type: integer
+        waypoint_index:
+          type: integer
+    RoutePlannerCollectionProperties:
+      type: object
+      required:
+      - mode
+      - params
+      properties:
+        mode:
+          type: string
+          enum:
+          - walk
+          - hike
+          - scooter
+          - motorcycle
+          - drive
+          - light_truck
+          - bicycle
+          - mountain_bike
+          - road_bike
+          - bus
+          - medium_truck
+          - truck
+          - truck_dangerous_goods
+          - heavy_truck
+          - long_truck
+          - transit
+          - approximated_transit
+        params:
+          $ref: '#/components/schemas/RoutePlannerParams'
+        issues:
+          $ref: '#/components/schemas/RoutePlannerIssues'
+    RoutePlannerParamLocation:
+      type: object
+      required:
+      - location
+      properties:
+        id:
+          type: string
+        location:
+          $ref: '#/components/schemas/LongitudeLatitude'
+    PlannerBreak:
+      type: object
+      additionalProperties: false
+      required:
+      - time_windows
+      properties:
+        duration:
+          type: number
+          minimum: 0
+          default: 0
+          description: Break duration in seconds.
+        time_windows:
+          type: array
+          maxItems: 10
+          description: Intervals in which the break may start.
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            prefixItems:
+            - type: number
+              minimum: 0
+              description: Interval start in relative seconds.
+            - type: number
+              minimum: 0
+              description: Interval end in relative seconds.
+            items: false
+    RoutePlannerResponse:
+      oneOf:
+      - $ref: '#/components/schemas/RoutePlannerFeatureCollection'
+      - $ref: '#/components/schemas/RoutePlannerDataError'
+    PlannerShipmentStop:
+      type: object
+      additionalProperties: false
+      oneOf:
+      - required:
+        - location
+      - required:
+        - location_index
+      properties:
+        location:
+          type: array
+          minItems: 2
+          maxItems: 2
+          prefixItems:
+          - type: number
+            minimum: -180
+            maximum: 180
+            description: Longitude.
+          - type: number
+            minimum: -90
+            maximum: 90
+            description: Latitude.
+          items: false
+          description: Pickup or delivery coordinate. Alternative to `location_index`.
+        location_index:
+          type: integer
+          minimum: 0
+          description: Zero-based index in `locations`. Alternative to `location`.
+        duration:
+          type: number
+          minimum: 0
+          default: 0
+          description: Pickup or delivery service duration in seconds.
+        time_windows:
+          type: array
+          maxItems: 10
+          description: Intervals in which an agent must reach this stop.
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            prefixItems:
+            - type: number
+              minimum: 0
+              description: Interval start in relative seconds.
+            - type: number
+              minimum: 0
+              description: Interval end in relative seconds.
+            items: false
+    MultiLineStringGeometry:
+      type: object
+      required:
+      - type
+      - coordinates
+      properties:
+        type:
+          const: MultiLineString
+        coordinates:
+          type: array
+          items:
+            type: array
+            minItems: 2
+            items:
+              $ref: '#/components/schemas/LongitudeLatitude'
+    PlannerLocation:
+      type: object
+      additionalProperties: false
+      required:
+      - location
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Optional unique location identifier returned with related plan actions and waypoints.
+        description:
+          type: string
+          maxLength: 1000
+          description: Optional human-readable location label.
+        location:
+          type: array
+          minItems: 2
+          maxItems: 2
+          prefixItems:
+          - type: number
+            minimum: -180
+            maximum: 180
+            description: Longitude.
+          - type: number
+            minimum: -90
+            maximum: 90
+            description: Latitude.
+          items: false
+          description: 'Reusable coordinate in GeoJSON order: `[longitude, latitude]`.'
+    RoutePlannerWaypoint:
+      type: object
+      required:
+      - original_location
+      - location
+      - start_time
+      - duration
+      - actions
+      properties:
+        next_leg_index:
+          type: integer
+        prev_leg_index:
+          type: integer
+        original_location:
+          $ref: '#/components/schemas/LongitudeLatitude'
+        location:
+          $ref: '#/components/schemas/LongitudeLatitude'
+        start_time:
+          type: number
+        duration:
+          type: number
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerAction'
+        original_location_index:
+          type: integer
+        original_location_id:
+          type: string
+    RoutePlannerParamAgent:
+      type: object
+      required: []
+      properties:
+        id:
+          type: string
+        start_location_index:
+          type: integer
+        start_location:
+          $ref: '#/components/schemas/LongitudeLatitude'
+        end_location_index:
+          type: integer
+        end_location:
+          $ref: '#/components/schemas/LongitudeLatitude'
+        delivery_capacity:
+          type: number
+        pickup_capacity:
+          type: number
+        capabilities:
+          type: array
+          items:
+            type: string
+        time_windows:
+          type: array
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            prefixItems:
+            - type: number
+            - type: number
+            items: false
+        breaks:
+          $ref: '#/components/schemas/JsonValue'
+    PlannerShipment:
+      type: object
+      additionalProperties: false
+      required:
+      - pickup
+      - delivery
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Optional unique shipment identifier.
+        pickup:
+          $ref: '#/components/schemas/PlannerShipmentStop'
+        delivery:
+          $ref: '#/components/schemas/PlannerShipmentStop'
+        requirements:
+          type: array
+          maxItems: 1000
+          uniqueItems: true
+          description: Capabilities an agent must have to handle the shipment.
+          items:
+            type: string
+            pattern: ^[A-Za-z0-9_. -]{1,100}$
+        priority:
+          type: integer
+          minimum: 0
+          maximum: 100
+          default: 0
+          description: Assignment priority from 0 (lowest) to 100 (highest).
+        amount:
+          type: number
+          minimum: 0
+          description: Shipment amount counted against agent capacity.
+        description:
+          type: string
+          maxLength: 1000
+          description: Optional human-readable shipment description.
+    RoutePlannerParams:
+      type: object
+      required:
+      - agents
+      - mode
+      properties:
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerParamLocation'
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerParamAgent'
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerParamJob'
+        shipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerParamShipment'
+        mode:
+          type: string
+          enum:
+          - walk
+          - hike
+          - scooter
+          - motorcycle
+          - drive
+          - light_truck
+          - bicycle
+          - mountain_bike
+          - road_bike
+          - bus
+          - medium_truck
+          - truck
+          - truck_dangerous_goods
+          - heavy_truck
+          - long_truck
+          - transit
+          - approximated_transit
+        type:
+          type: string
+          enum:
+          - balanced
+          - short
+          - less_maneuvers
+        max_speed:
+          type: number
+        traffic:
+          type: string
+          enum:
+          - free_flow
+          - approximated
+        units:
+          type: string
+          enum:
+          - metric
+          - imperial
+        avoid:
+          type: array
+          items:
+            $ref: '#/components/schemas/Avoid'
+    RoutePlannerFeatureProperties:
+      type: object
+      required:
+      - agent_index
+      - time
+      - start_time
+      - end_time
+      - distance
+      - legs
+      - mode
+      - actions
+      - waypoints
+      properties:
+        agent_index:
+          type: integer
+        agent_id:
+          type: string
+        time:
+          type: number
+        start_time:
+          type: number
+        end_time:
+          type: number
+        distance:
+          type: number
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerLeg'
+        mode:
+          type: string
+          enum:
+          - walk
+          - hike
+          - scooter
+          - motorcycle
+          - drive
+          - light_truck
+          - bicycle
+          - mountain_bike
+          - road_bike
+          - bus
+          - medium_truck
+          - truck
+          - truck_dangerous_goods
+          - heavy_truck
+          - long_truck
+          - transit
+          - approximated_transit
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerAction'
+        waypoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutePlannerWaypoint'
+    RoutePlannerRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - mode
+      - agents
+      anyOf:
+      - required:
+        - jobs
+        properties:
+          jobs:
+            minItems: 1
+      - required:
+        - shipments
+        properties:
+          shipments:
+            minItems: 1
+      properties:
+        mode:
+          type: string
+          enum:
+          - walk
+          - hike
+          - scooter
+          - motorcycle
+          - drive
+          - light_truck
+          - bicycle
+          - mountain_bike
+          - road_bike
+          - bus
+          - medium_truck
+          - truck
+          - truck_dangerous_goods
+          - heavy_truck
+          - long_truck
+          example: drive
+          description: Travel profile used for all agent routes. `drive` represents passenger cars.
+        agents:
+          type: array
+          minItems: 1
+          maxItems: 100
+          description: Resources—such as vehicles or workers—to which jobs and shipments can be assigned.
+          items:
+            $ref: '#/components/schemas/PlannerAgent'
+        jobs:
+          type: array
+          maxItems: 1000
+          description: Independent service or delivery tasks. At least one job or shipment is required.
+          items:
+            $ref: '#/components/schemas/PlannerJob'
+        shipments:
+          type: array
+          maxItems: 1000
+          description: Paired pickup-delivery tasks. Pickup always precedes delivery and both are assigned to the same agent.
+          items:
+            $ref: '#/components/schemas/PlannerShipment'
+        locations:
+          type: array
+          maxItems: 1000
+          description: Reusable coordinates referenced by zero-based `location_index` fields. Regular calls may contain at most 300 unique coordinates across the complete task.
+          items:
+            $ref: '#/components/schemas/PlannerLocation'
+        avoid:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - type
+            properties:
+              type:
+                type: string
+                enum:
+                - tolls
+                - ferries
+                - highways
+                - green_zones
+                - transfers
+                - locations
+                - polygons
+                - country_codes
+              importance:
+                type: number
+                minimum: 0
+                maximum: 1
+              values:
+                type: array
+                items: {}
+          maxItems: 100
+          description: Road features, locations, polygons, or countries the calculated agent routes should avoid.
+        traffic:
+          type: string
+          enum:
+          - free_flow
+          - approximated
+          default: free_flow
+          description: Traffic model for motorized modes. `free_flow` assumes uncongested roads; `approximated` accounts for likely congestion.
+        type:
+          type: string
+          enum:
+          - balanced
+          - short
+          - less_maneuvers
+          default: balanced
+          description: Route preference used for agent travel. `balanced` balances time and distance; `short` prioritizes distance; `less_maneuvers` penalizes turns.
+        max_speed:
+          type: number
+          minimum: 6.5
+          maximum: 252
+          example: 80
+          description: Maximum speed for driving, truck, and bus modes. Use 10–252 km/h with `units=metric`, or 6.5–155 mph with `units=imperial`.
+        units:
+          type: string
+          enum:
+          - metric
+          - imperial
+          default: metric
+          description: Unit system for returned route distances. `metric` returns meters; `imperial` returns miles.
+  securitySchemes:
+    ApiKeyInQuery:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: Geoapify API key query parameter. Recommended authentication method for public APIs. API keys in URLs can be logged; use x-api-key for server-to-server clients.
+    ApiKeyInHeader:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Geoapify API key header. Supported as an alternative authentication method for public APIs.

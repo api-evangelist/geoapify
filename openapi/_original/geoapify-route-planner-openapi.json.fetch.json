@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/route-planner/route-planner-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/route-planner/route-planner-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 95810,
+ "sha256": "d02d652acc8e5aade16c35cc07669d7dbe157bbdc2c3c3ea714c6756a0ce71b0",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

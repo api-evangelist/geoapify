@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/route-matrix/route-matrix-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/route-matrix/route-matrix-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 72221,
+ "sha256": "3d665e68b6b138e647211bf95f508eee45ad3d10730e95ed9a3537ff20fd4cea",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

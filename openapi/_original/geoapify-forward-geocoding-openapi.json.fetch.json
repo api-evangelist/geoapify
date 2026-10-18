@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/forward-geocoding/forward-geocoding-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/forward-geocoding/forward-geocoding-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 60716,
+ "sha256": "3ccf6ac2d51a7c0167e9b7bd65b1991da81c3fb3428dd26dafd6b922e62f724c",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

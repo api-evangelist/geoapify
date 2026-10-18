@@ -1,0 +1,392 @@
+openapi: 3.2.0
+info:
+  title: Geoapify Geometry API
+  version: 1.1.0
+  description: Store GeoJSON geometries and calculate unions or intersections of two or more reusable geometry or isoline IDs.
+servers:
+- url: https://api.geoapify.com/v1
+  description: Default API endpoint.
+- url: https://api-eu.geoapify.com/v1
+  description: EU-focused endpoint. Geoapify service processing uses EU infrastructure.
+security:
+- ApiKeyInQuery: []
+- ApiKeyInHeader: []
+tags:
+- name: Geometry
+  description: Store GeoJSON and combine stored or generated geometries by union or intersection.
+paths:
+  /geometry:
+    get:
+      tags:
+      - Geometry
+      operationId: calculateStoredGeometry
+      summary: Combine geometries by union or intersection
+      description: 'Combines two or more previously generated or stored geometries and returns a new GeoJSON FeatureCollection.
+
+
+        - Repeat the `id` query parameter for every input geometry; at least two IDs are required.
+
+        - Use `operation=union` to merge all covered areas, or `operation=intersection` to return only their common area.
+
+        - Input IDs can come from APIs that return reusable geometry or isoline IDs, or from `POST /geometry`.
+
+        - The default `format=geojson` response includes a new `properties.id` that can be reused in later Geometry API calls.
+
+        - `topojson` returns TopoJSON and `geobuf` returns a binary Geobuf payload.
+
+
+        **Example:** union two 600-second drive isolines near Philadelphia, Pennsylvania.'
+      parameters:
+      - name: id
+        in: query
+        required: true
+        description: Geometry or isoline IDs to combine. Repeat `id` for every input; at least two IDs are required.
+        schema:
+          type: array
+          minItems: 2
+          items:
+            type: string
+            pattern: ^[a-f0-9]{32}$
+            description: Reusable 32-character geometry or isoline ID.
+          example:
+          - a3f2029c4c2741f40782725fa0dc88be
+          - 1a98e89ca85dcc8251211d7d83e16512
+        style: form
+        explode: true
+      - name: operation
+        in: query
+        required: true
+        description: Required operation. `union` merges all input areas; `intersection` keeps only their common area.
+        schema:
+          type: string
+          enum:
+          - intersection
+          - union
+          example: union
+      - name: details
+        in: query
+        required: false
+        description: Optional detail datasets to add to each returned feature.
+        schema:
+          type: array
+          items:
+            type: string
+            pattern: ^(details:)?[a-z.0-9_-]{5,100}(,[a-z.0-9_-]{5,100})*$
+        style: form
+        explode: false
+      - name: format
+        in: query
+        required: false
+        description: Response encoding. The documented response schema and example describe the default GeoJSON format.
+        schema:
+          type: string
+          enum:
+          - geojson
+          - topojson
+          - geobuf
+          default: geojson
+          example: geojson
+      responses:
+        '200':
+          description: Combined geometry. The example represents the GeoJSON union of two preset drive isolines; its coordinates are intentionally simplified to demonstrate the MultiPolygon structure. Actual responses contain more detailed geometry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeatureCollection'
+              example:
+                type: FeatureCollection
+                properties:
+                  id: af563946ba55e4467a2ea847a9c58c92
+                features:
+                - type: Feature
+                  properties:
+                    source:
+                    - lon: -75.1116387
+                      range: 600
+                      mode: drive
+                      lat: 39.940902
+                      type: time
+                      id: a3f2029c4c2741f40782725fa0dc88be
+                    - lon: -75.0503777
+                      range: 600
+                      mode: drive
+                      lat: 39.9821319
+                      type: time
+                      id: 1a98e89ca85dcc8251211d7d83e16512
+                    type: union
+                    id: af563946ba55e4467a2ea847a9c58c92
+                  geometry:
+                    type: MultiPolygon
+                    coordinates:
+                    - - - - -75.14
+                          - 39.93
+                        - - -75.08
+                          - 39.91
+                        - - -75.03
+                          - 39.96
+                        - - -75.06
+                          - 40.01
+                        - - -75.12
+                          - 39.99
+                        - - -75.14
+                          - 39.93
+        '400':
+          description: Invalid geometry IDs, fewer than two IDs, unsupported operation, details, or response format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              examples:
+                tooFewIds:
+                  summary: Fewer than two geometry IDs
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: '"id" must contain at least 2 items'
+                invalidOperation:
+                  summary: Unsupported geometry operation
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: '"operation" must be one of [intersection, union]'
+                invalidFormat:
+                  summary: Unsupported response format
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: '"format" must be one of [geojson, topojson, geobuf]'
+        '401':
+          description: Missing or invalid Geoapify API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Invalid apiKey
+        '429':
+          description: Rate limit or quota exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 429
+                error: Too Many Requests
+                message: Quota exceeded
+        '500':
+          description: Internal gateway error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: Request failed, please try again later
+    post:
+      tags:
+      - Geometry
+      operationId: storeGeometry
+      summary: Store a GeoJSON geometry for later operations
+      description: 'Stores a GeoJSON geometry and returns an ID for later Geometry API operations.
+
+
+        - Send a GeoJSON FeatureCollection, Feature, or geometry object in the request body.
+
+        - Keep the returned `id` and pass it as one of the repeated `id` parameters in `GET /geometry`.
+
+        - Use the GET operation with at least two IDs to calculate a union or intersection.'
+      requestBody:
+        required: true
+        description: GeoJSON FeatureCollection, Feature, or geometry to store.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GeoJsonInput'
+      responses:
+        '200':
+          description: Reusable identifier for the stored geometry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoredGeometryResponse'
+        '400':
+          description: Invalid JSON or GeoJSON request body.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 400
+                error: Bad Request
+                message: Bad Request
+        '401':
+          description: Missing or invalid Geoapify API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Invalid apiKey
+        '429':
+          description: Rate limit or quota exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 429
+                error: Too Many Requests
+                message: Quota exceeded
+        '500':
+          description: Internal gateway error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: Request failed, please try again later
+components:
+  schemas:
+    Feature:
+      type: object
+      additionalProperties: true
+      required:
+      - type
+      - properties
+      - geometry
+      properties:
+        type:
+          const: Feature
+        properties:
+          $ref: '#/components/schemas/GeometryProperties'
+        geometry:
+          oneOf:
+          - $ref: '#/components/schemas/PointGeometry'
+          - $ref: '#/components/schemas/GenericGeometry'
+          - $ref: '#/components/schemas/GeometryCollection'
+        bbox:
+          type: array
+          minItems: 4
+          maxItems: 6
+          items:
+            type: number
+    GeoJsonInput:
+      oneOf:
+      - $ref: '#/components/schemas/FeatureCollection'
+      - $ref: '#/components/schemas/Feature'
+      - $ref: '#/components/schemas/GenericGeometry'
+      - $ref: '#/components/schemas/PointGeometry'
+    FeatureCollection:
+      type: object
+      additionalProperties: true
+      required:
+      - type
+      - features
+      properties:
+        type:
+          const: FeatureCollection
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/Feature'
+    Position:
+      type: array
+      minItems: 2
+      maxItems: 3
+      prefixItems:
+      - type: number
+        minimum: -180
+        maximum: 180
+      - type: number
+        minimum: -90
+        maximum: 90
+      - type: number
+      items: false
+    GenericGeometry:
+      type: object
+      additionalProperties: true
+      required:
+      - type
+      - coordinates
+      properties:
+        type:
+          type: string
+          enum:
+          - LineString
+          - Polygon
+          - MultiPoint
+          - MultiLineString
+          - MultiPolygon
+        coordinates:
+          type: array
+    StoredGeometryResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          pattern: ^[a-f0-9]{32}$
+          description: Reusable identifier accepted by the GET operation.
+    PointGeometry:
+      type: object
+      required:
+      - type
+      - coordinates
+      properties:
+        type:
+          const: Point
+        coordinates:
+          $ref: '#/components/schemas/Position'
+    GeometryCollection:
+      type: object
+      required:
+      - type
+      - geometries
+      properties:
+        type:
+          const: GeometryCollection
+        geometries:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PointGeometry'
+            - $ref: '#/components/schemas/GenericGeometry'
+            - $ref: '#/components/schemas/GeometryCollection'
+    GeometryProperties:
+      type: object
+      additionalProperties: true
+    GatewayError:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code returned by the API gateway.
+        error:
+          type: string
+          description: Standard HTTP error name.
+        message:
+          type: string
+          description: Human-readable explanation of the error.
+  securitySchemes:
+    ApiKeyInQuery:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: Geoapify API key query parameter. Recommended authentication method for public APIs. API keys in URLs can be logged; use x-api-key for server-to-server clients.
+    ApiKeyInHeader:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Geoapify API key header. Supported as an alternative authentication method for public APIs.

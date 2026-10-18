@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/places/places-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/places/places-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 133366,
+ "sha256": "21eb86d0fb7c29fdfc15285001108a775fb1b914d764aeb5c21259c889456fb4",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

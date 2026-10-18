@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/address-autocomplete/address-autocomplete-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/address-autocomplete/address-autocomplete-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 72400,
+ "sha256": "1b511801a41e8d8f60d3b536aa21ca39122635485fb805f886d63845a2242e16",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

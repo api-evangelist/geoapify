@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/elevation/elevation-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/elevation/elevation-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 15806,
+ "sha256": "9743b8f605d4e189d430829c7fc523c66ec01e15eff81f7d0ef76b648258ab34",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

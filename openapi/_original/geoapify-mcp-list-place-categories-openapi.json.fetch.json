@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/list-place-categories-openapi-spec.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/list-place-categories-openapi-spec.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 17995,
+ "sha256": "3f26d70bc6871e7bdd2f7e062d7c48897f172070200988ac3bf81a629ed3352f",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

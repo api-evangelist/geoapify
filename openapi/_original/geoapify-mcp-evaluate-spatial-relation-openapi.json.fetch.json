@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/evaluate-spatial-relation-openapi-spec.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/evaluate-spatial-relation-openapi-spec.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 52216,
+ "sha256": "8739086cf6fc5c9babc73237c8c8e1a125bba309860264e1ec4696f70fa42ab0",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

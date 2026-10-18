@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/mcp-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/mcp-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 158625,
+ "sha256": "01fb5bc34c34db88a7b48de0762ec73c13c43750518a4d4f33761a3960733479",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

@@ -1,0 +1,4314 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Geoapify MCP API",
+    "version": "1.1.0",
+    "description": "Compact catalog for the Geoapify Model Context Protocol JSON-RPC endpoint. Use the linked focused specifications for complete tool output contracts and additional examples."
+  },
+  "servers": [
+    {
+      "url": "https://api.geoapify.com/v1",
+      "description": "Default API endpoint."
+    },
+    {
+      "url": "https://api-eu.geoapify.com/v1",
+      "description": "EU-focused endpoint. Geoapify service processing uses EU infrastructure."
+    }
+  ],
+  "tags": [
+    {
+      "name": "MCP",
+      "description": "Model Context Protocol JSON-RPC endpoint."
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "tags": [
+          "MCP"
+        ],
+        "operationId": "callMcpJsonRpc",
+        "summary": "Call the Geoapify MCP JSON-RPC endpoint",
+        "description": "Send MCP initialize, tools/list, tools/call, or notification JSON-RPC requests. Tool execution and validation failures return HTTP 200 with result.isError set to true; transport, authentication, quota, and gateway failures use HTTP error statuses.",
+        "parameters": [
+          {
+            "name": "MCP-Protocol-Version",
+            "in": "header",
+            "required": false,
+            "description": "Optional protocol version. Defaults to 2025-06-18 when omitted; explicitly unsupported versions are rejected.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "2025-06-18"
+              ]
+            },
+            "example": "2025-06-18"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/InitializeRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ToolsListRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/NotificationRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/GeocodeAddressToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/GeocodeStructuredAddressToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ReverseGeocodeCoordinatesToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SearchPlacesToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ListPlaceCategoriesToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CalculateRouteToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CalculateRouteMatrixToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CombineGeometriesToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EvaluateSpatialRelationToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/MeasureGeometryToolCallRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TransformGeometryToolCallRequest"
+                  }
+                ]
+              },
+              "example": {
+                "jsonrpc": "2.0",
+                "id": 1,
+                "method": "tools/list"
+              },
+              "examples": {
+                "toolsList": {
+                  "summary": "List MCP tools",
+                  "description": "Default request body. Returns the tools and input schemas exposed by the Geoapify MCP endpoint.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/list"
+                  }
+                },
+                "initialize": {
+                  "summary": "Initialize MCP session",
+                  "description": "Initialize an MCP client session and read server capabilities.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "initialize",
+                    "params": {
+                      "protocolVersion": "2025-06-18",
+                      "capabilities": {},
+                      "clientInfo": {
+                        "name": "swagger-ui",
+                        "version": "1.0.0"
+                      }
+                    }
+                  }
+                },
+                "geocodeAddressBerlin": {
+                  "summary": "Geocode a city name",
+                  "description": "Convert a free-text address or place query into coordinates and structured address data.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "geocode_address",
+                      "arguments": {
+                        "query": "Berlin",
+                        "limit": 1,
+                        "lang": "en"
+                      }
+                    }
+                  }
+                },
+                "geocodeStructuredAddressStreet": {
+                  "summary": "Geocode structured street fields",
+                  "description": "Geocode structured address fields into coordinates and normalized address data.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "geocode_structured_address",
+                      "arguments": {
+                        "street": "Unter den Linden",
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "limit": 1,
+                        "lang": "en"
+                      }
+                    }
+                  }
+                },
+                "reverseGeocodeBerlin": {
+                  "summary": "Reverse geocode a coordinate",
+                  "description": "Convert latitude and longitude coordinates into nearby address or place data.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "reverse_geocode_coordinates",
+                      "arguments": {
+                        "lat": 52.52,
+                        "lon": 13.405,
+                        "limit": 1,
+                        "lang": "en"
+                      }
+                    }
+                  }
+                },
+                "searchPlacesRestaurants": {
+                  "summary": "Find nearby restaurants",
+                  "description": "Find places and points of interest by category near geographic coordinates.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "search_places",
+                      "arguments": {
+                        "category": "catering.restaurant",
+                        "lat": 52.52,
+                        "lon": 13.405,
+                        "radius_meters": 1000,
+                        "limit": 1,
+                        "lang": "en"
+                      }
+                    }
+                  }
+                },
+                "listPlaceCategoriesNumericId": {
+                  "summary": "List place categories",
+                  "description": "List the category values accepted by search_places.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "list_place_categories",
+                      "arguments": {}
+                    }
+                  }
+                },
+                "calculateRouteDrive": {
+                  "summary": "Calculate a driving route",
+                  "description": "Calculate a route between geographic waypoints for a supported travel mode.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "calculate_route",
+                      "arguments": {
+                        "waypoints": [
+                          {
+                            "lat": 52.52,
+                            "lon": 13.405
+                          },
+                          {
+                            "lat": 52.51,
+                            "lon": 13.39
+                          }
+                        ],
+                        "mode": "drive",
+                        "geometry_scope": "none",
+                        "include_instructions": false,
+                        "units": "metric"
+                      }
+                    }
+                  }
+                },
+                "calculateRouteMatrixSymmetric": {
+                  "summary": "Calculate a symmetric route matrix",
+                  "description": "Calculate travel times and distances between source and target locations.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "calculate_route_matrix",
+                      "arguments": {
+                        "sources": [
+                          {
+                            "lat": 52.52,
+                            "lon": 13.405
+                          },
+                          {
+                            "lat": 52.51,
+                            "lon": 13.39
+                          }
+                        ],
+                        "mode": "drive"
+                      }
+                    }
+                  }
+                },
+                "combineIntersection": {
+                  "summary": "Geometry: intersect two polygons",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 10,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "combine_geometries",
+                      "arguments": {
+                        "operation": "intersection",
+                        "geometries": [
+                          {
+                            "type": "Polygon",
+                            "coordinates": [
+                              [
+                                [
+                                  13.38,
+                                  52.5
+                                ],
+                                [
+                                  13.42,
+                                  52.5
+                                ],
+                                [
+                                  13.42,
+                                  52.54
+                                ],
+                                [
+                                  13.38,
+                                  52.54
+                                ],
+                                [
+                                  13.38,
+                                  52.5
+                                ]
+                              ]
+                            ]
+                          },
+                          {
+                            "type": "Polygon",
+                            "coordinates": [
+                              [
+                                [
+                                  13.4,
+                                  52.51
+                                ],
+                                [
+                                  13.44,
+                                  52.51
+                                ],
+                                [
+                                  13.44,
+                                  52.55
+                                ],
+                                [
+                                  13.4,
+                                  52.55
+                                ],
+                                [
+                                  13.4,
+                                  52.51
+                                ]
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "relationContains": {
+                  "summary": "Geometry: check whether a polygon contains a point",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 13,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "evaluate_spatial_relation",
+                      "arguments": {
+                        "operation": "contains",
+                        "geometry": {
+                          "type": "Polygon",
+                          "coordinates": [
+                            [
+                              [
+                                13.38,
+                                52.5
+                              ],
+                              [
+                                13.42,
+                                52.5
+                              ],
+                              [
+                                13.42,
+                                52.54
+                              ],
+                              [
+                                13.38,
+                                52.54
+                              ],
+                              [
+                                13.38,
+                                52.5
+                              ]
+                            ]
+                          ]
+                        },
+                        "other_geometry": {
+                          "type": "Point",
+                          "coordinates": [
+                            13.405,
+                            52.52
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "measureArea": {
+                  "summary": "Geometry: calculate polygon area",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 16,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "measure_geometry",
+                      "arguments": {
+                        "operation": "area",
+                        "geometry": {
+                          "type": "Polygon",
+                          "coordinates": [
+                            [
+                              [
+                                13.38,
+                                52.5
+                              ],
+                              [
+                                13.42,
+                                52.5
+                              ],
+                              [
+                                13.42,
+                                52.54
+                              ],
+                              [
+                                13.38,
+                                52.54
+                              ],
+                              [
+                                13.38,
+                                52.5
+                              ]
+                            ]
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "transformBuffer": {
+                  "summary": "Geometry: create a 500-meter point buffer",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 22,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "transform_geometry",
+                      "arguments": {
+                        "operation": "buffer",
+                        "geometry": {
+                          "type": "Point",
+                          "coordinates": [
+                            13.405,
+                            52.52
+                          ]
+                        },
+                        "distance": 500,
+                        "units": "meters",
+                        "steps": 16
+                      }
+                    }
+                  }
+                },
+                "notificationsInitialized": {
+                  "summary": "Initialized notification",
+                  "description": "Send an MCP initialized notification. Notifications do not include a JSON-RPC id.",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "method": "notifications/initialized"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC response for initialize, tools/list, and tools/call requests, including tool failures with result.isError set to true.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpResponse"
+                },
+                "examples": {
+                  "geocodeAddressSuccess": {
+                    "summary": "Geocode address result",
+                    "description": "Live response for the geocodeAddressBerlin request example.",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 1,
+                      "result": {
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{\"query\":\"Berlin\",\"count\":1,\"results\":[{\"formatted\":\"Berlin Mountain, Berlin, NY, United States of America\",\"address_line1\":\"Berlin Mountain\",\"address_line2\":\"Berlin, NY, United States of America\",\"lon\":-73.2862195,\"lat\":42.6920245,\"place_id\":\"518ffe976b515252c059f0c3414294584540f00103f901f7c04f1500000000c0020192030f4265726c696e204d6f756e7461696e\",\"result_type\":\"amenity\",\"rank\":{\"popularity\":2.1667100707167255,\"confidence\":1,\"match_type\":\"full_match\"},\"confidence\":1,\"city\":\"Town of Berlin\",\"county\":\"Rensselaer County\",\"state\":\"New York\",\"country\":\"United States\",\"country_code\":\"us\",\"timezone\":{\"name\":\"America/New_York\",\"offset_STD\":\"-05:00\",\"offset_DST\":\"-04:00\",\"offset_STD_seconds\":-18000,\"offset_DST_seconds\":-14400,\"abbreviation_STD\":\"EST\",\"abbreviation_DST\":\"EDT\"},\"bbox\":{\"lon1\":-73.2862195,\"lat1\":42.6920245,\"lon2\":-73.2862195,\"lat2\":42.6920245}}]}"
+                          }
+                        ],
+                        "structuredContent": {
+                          "query": "Berlin",
+                          "count": 1,
+                          "results": [
+                            {
+                              "formatted": "Berlin Mountain, Berlin, NY, United States of America",
+                              "address_line1": "Berlin Mountain",
+                              "address_line2": "Berlin, NY, United States of America",
+                              "lon": -73.2862195,
+                              "lat": 42.6920245,
+                              "place_id": "518ffe976b515252c059f0c3414294584540f00103f901f7c04f1500000000c0020192030f4265726c696e204d6f756e7461696e",
+                              "result_type": "amenity",
+                              "rank": {
+                                "popularity": 2.1667100707167255,
+                                "confidence": 1,
+                                "match_type": "full_match"
+                              },
+                              "confidence": 1,
+                              "city": "Town of Berlin",
+                              "county": "Rensselaer County",
+                              "state": "New York",
+                              "country": "United States",
+                              "country_code": "us",
+                              "timezone": {
+                                "name": "America/New_York",
+                                "offset_STD": "-05:00",
+                                "offset_DST": "-04:00",
+                                "offset_STD_seconds": -18000,
+                                "offset_DST_seconds": -14400,
+                                "abbreviation_STD": "EST",
+                                "abbreviation_DST": "EDT"
+                              },
+                              "bbox": {
+                                "lon1": -73.2862195,
+                                "lat1": 42.6920245,
+                                "lon2": -73.2862195,
+                                "lat2": 42.6920245
+                              }
+                            }
+                          ]
+                        },
+                        "isError": false
+                      }
+                    }
+                  },
+                  "geocodeStructuredAddressSuccess": {
+                    "summary": "Structured address result",
+                    "description": "Live response for the geocodeStructuredAddressStreet request example.",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 1,
+                      "result": {
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{\"address\":{\"street\":\"Unter den Linden\",\"city\":\"Berlin\",\"country\":\"Germany\"},\"count\":1,\"results\":[{\"formatted\":\"Unter den Linden, 10117 Berlin, Germany\",\"address_line1\":\"Unter den Linden\",\"address_line2\":\"10117 Berlin, Germany\",\"lon\":13.3831728,\"lat\":52.5167822,\"place_id\":\"51fa6ea9392fc42a4059d5134ceb25424a40f00102f9013fe4c04200000000c00204920310556e7465722064656e204c696e64656e\",\"result_type\":\"street\",\"rank\":{\"importance\":0.5166848938100648,\"popularity\":8.995467104553104,\"confidence\":1,\"confidence_city_level\":1,\"confidence_street_level\":1,\"match_type\":\"full_match\"},\"confidence\":1,\"street\":\"Unter den Linden\",\"postcode\":\"10117\",\"city\":\"Berlin\",\"state\":\"Berlin\",\"country\":\"Germany\",\"country_code\":\"de\",\"timezone\":{\"name\":\"Europe/Berlin\",\"offset_STD\":\"+01:00\",\"offset_DST\":\"+02:00\",\"offset_STD_seconds\":3600,\"offset_DST_seconds\":7200,\"abbreviation_STD\":\"CET\",\"abbreviation_DST\":\"CEST\"},\"bbox\":{\"lon1\":13.3817021,\"lat1\":52.5166853,\"lon2\":13.3846435,\"lat2\":52.5168788}}]}"
+                          }
+                        ],
+                        "structuredContent": {
+                          "address": {
+                            "street": "Unter den Linden",
+                            "city": "Berlin",
+                            "country": "Germany"
+                          },
+                          "count": 1,
+                          "results": [
+                            {
+                              "formatted": "Unter den Linden, 10117 Berlin, Germany",
+                              "address_line1": "Unter den Linden",
+                              "address_line2": "10117 Berlin, Germany",
+                              "lon": 13.3831728,
+                              "lat": 52.5167822,
+                              "place_id": "51fa6ea9392fc42a4059d5134ceb25424a40f00102f9013fe4c04200000000c00204920310556e7465722064656e204c696e64656e",
+                              "result_type": "street",
+                              "rank": {
+                                "importance": 0.5166848938100648,
+                                "popularity": 8.995467104553104,
+                                "confidence": 1,
+                                "confidence_city_level": 1,
+                                "confidence_street_level": 1,
+                                "match_type": "full_match"
+                              },
+                              "confidence": 1,
+                              "street": "Unter den Linden",
+                              "postcode": "10117",
+                              "city": "Berlin",
+                              "state": "Berlin",
+                              "country": "Germany",
+                              "country_code": "de",
+                              "timezone": {
+                                "name": "Europe/Berlin",
+                                "offset_STD": "+01:00",
+                                "offset_DST": "+02:00",
+                                "offset_STD_seconds": 3600,
+                                "offset_DST_seconds": 7200,
+                                "abbreviation_STD": "CET",
+                                "abbreviation_DST": "CEST"
+                              },
+                              "bbox": {
+                                "lon1": 13.3817021,
+                                "lat1": 52.5166853,
+                                "lon2": 13.3846435,
+                                "lat2": 52.5168788
+                              }
+                            }
+                          ]
+                        },
+                        "isError": false
+                      }
+                    }
+                  },
+                  "reverseGeocodeCoordinatesSuccess": {
+                    "summary": "Reverse geocoding result",
+                    "description": "Live response for the reverseGeocodeBerlin request example.",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 1,
+                      "result": {
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{\"coordinates\":{\"lat\":52.52,\"lon\":13.405},\"count\":1,\"results\":[{\"formatted\":\"Nordsee, Spandauer Straße 4, 10178 Berlin, Germany\",\"address_line1\":\"Nordsee\",\"address_line2\":\"Spandauer Straße 4, 10178 Berlin, Germany\",\"lon\":13.4049136,\"lat\":52.5204075,\"place_id\":\"514869dbd550cf2a4059eb8b84b69c424a40f00103f901726b151a00000000c002019203074e6f7264736565e203226f70656e7374726565746d61703a76656e75653a6e6f64652f343337363131333738\",\"result_type\":\"amenity\",\"rank\":{\"importance\":0.00008875486381318407,\"popularity\":8.995467104553104},\"housenumber\":\"4\",\"street\":\"Spandauer Straße\",\"postcode\":\"10178\",\"city\":\"Berlin\",\"state\":\"Berlin\",\"country\":\"Germany\",\"country_code\":\"de\",\"timezone\":{\"name\":\"Europe/Berlin\",\"offset_STD\":\"+01:00\",\"offset_DST\":\"+02:00\",\"offset_STD_seconds\":3600,\"offset_DST_seconds\":7200,\"abbreviation_STD\":\"CET\",\"abbreviation_DST\":\"CEST\"},\"bbox\":{\"lon1\":13.4048636,\"lat1\":52.5203575,\"lon2\":13.4049636,\"lat2\":52.5204575}}]}"
+                          }
+                        ],
+                        "structuredContent": {
+                          "coordinates": {
+                            "lat": 52.52,
+                            "lon": 13.405
+                          },
+                          "count": 1,
+                          "results": [
+                            {
+                              "formatted": "Nordsee, Spandauer Straße 4, 10178 Berlin, Germany",
+                              "address_line1": "Nordsee",
+                              "address_line2": "Spandauer Straße 4, 10178 Berlin, Germany",
+                              "lon": 13.4049136,
+                              "lat": 52.5204075,
+                              "place_id": "514869dbd550cf2a4059eb8b84b69c424a40f00103f901726b151a00000000c002019203074e6f7264736565e203226f70656e7374726565746d61703a76656e75653a6e6f64652f343337363131333738",
+                              "result_type": "amenity",
+                              "rank": {
+                                "importance": 0.00008875486381318407,
+                                "popularity": 8.995467104553104
+                              },
+                              "housenumber": "4",
+                              "street": "Spandauer Straße",
+                              "postcode": "10178",
+                              "city": "Berlin",
+                              "state": "Berlin",
+                              "country": "Germany",
+                              "country_code": "de",
+                              "timezone": {
+                                "name": "Europe/Berlin",
+                                "offset_STD": "+01:00",
+                                "offset_DST": "+02:00",
+                                "offset_STD_seconds": 3600,
+                                "offset_DST_seconds": 7200,
+                                "abbreviation_STD": "CET",
+                                "abbreviation_DST": "CEST"
+                              },
+                              "bbox": {
+                                "lon1": 13.4048636,
+                                "lat1": 52.5203575,
+                                "lon2": 13.4049636,
+                                "lat2": 52.5204575
+                              }
+                            }
+                          ]
+                        },
+                        "isError": false
+                      }
+                    }
+                  },
+                  "searchPlacesSuccess": {
+                    "summary": "Nearby places result",
+                    "description": "Live response for the searchPlacesRestaurants request example.",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 1,
+                      "result": {
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{\"category\":\"catering.restaurant\",\"coordinates\":{\"lat\":52.52,\"lon\":13.405},\"radius_meters\":1000,\"count\":1,\"results\":[{\"name\":\"BLOCK HOUSE\",\"country\":\"Germany\",\"country_code\":\"de\",\"city\":\"Berlin\",\"postcode\":\"10178\",\"district\":\"Mitte\",\"neighbourhood\":\"Nikolaiviertel\",\"suburb\":\"Mitte\",\"street\":\"Karl-Liebknecht-Straße\",\"housenumber\":\"7\",\"lon\":13.4051631,\"lat\":52.5205315,\"state\":\"Berlin\",\"state_code\":\"BE\",\"formatted\":\"BLOCK HOUSE, Karl-Liebknecht-Straße 7, 10178 Berlin, Germany\",\"categories\":[\"catering\",\"catering.restaurant\",\"catering.restaurant.steak_house\"],\"datasource\":{\"sourcename\":\"openstreetmap\",\"attribution\":\"© OpenStreetMap contributors\",\"license\":\"Open Database License\",\"url\":\"https://www.openstreetmap.org/copyright\"},\"website\":\"http://www.block-house.de\",\"opening_hours\":\"Mo-Sa 12:00-23:00; Su 12:00-22:00\",\"brand\":\"BLOCK HOUSE\",\"brand_details\":{\"wikidata\":\"Q320430\",\"wikipedia\":\"de:Block House\"},\"name_international\":{\"de\":\"BLOCK HOUSE\"},\"contact\":{\"phone\":\"+49 30 2423300\"},\"facilities\":{\"wheelchair\":true,\"smoking\":true,\"toilets\":false,\"outdoor_seating\":true},\"catering\":{\"cuisine\":\"steak_house\"},\"distance\":60,\"place_id\":\"518a17b08971cf2a4059d784b4c6a0424a40f00103f901bb70151a0000000092030b424c4f434b20484f555345\"}]}"
+                          }
+                        ],
+                        "structuredContent": {
+                          "category": "catering.restaurant",
+                          "coordinates": {
+                            "lat": 52.52,
+                            "lon": 13.405
+                          },
+                          "radius_meters": 1000,
+                          "count": 1,
+                          "results": [
+                            {
+                              "name": "BLOCK HOUSE",
+                              "country": "Germany",
+                              "country_code": "de",
+                              "city": "Berlin",
+                              "postcode": "10178",
+                              "district": "Mitte",
+                              "neighbourhood": "Nikolaiviertel",
+                              "suburb": "Mitte",
+                              "street": "Karl-Liebknecht-Straße",
+                              "housenumber": "7",
+                              "lon": 13.4051631,
+                              "lat": 52.5205315,
+                              "state": "Berlin",
+                              "state_code": "BE",
+                              "formatted": "BLOCK HOUSE, Karl-Liebknecht-Straße 7, 10178 Berlin, Germany",
+                              "categories": [
+                                "catering",
+                                "catering.restaurant",
+                                "catering.restaurant.steak_house"
+                              ],
+                              "datasource": {
+                                "sourcename": "openstreetmap",
+                                "attribution": "© OpenStreetMap contributors",
+                                "license": "Open Database License",
+                                "url": "https://www.openstreetmap.org/copyright"
+                              },
+                              "website": "http://www.block-house.de",
+                              "opening_hours": "Mo-Sa 12:00-23:00; Su 12:00-22:00",
+                              "brand": "BLOCK HOUSE",
+                              "brand_details": {
+                                "wikidata": "Q320430",
+                                "wikipedia": "de:Block House"
+                              },
+                              "name_international": {
+                                "de": "BLOCK HOUSE"
+                              },
+                              "contact": {
+                                "phone": "+49 30 2423300"
+                              },
+                              "facilities": {
+                                "wheelchair": true,
+                                "smoking": true,
+                                "toilets": false,
+                                "outdoor_seating": true
+                              },
+                              "catering": {
+                                "cuisine": "steak_house"
+                              },
+                              "distance": 60,
+                              "place_id": "518a17b08971cf2a4059d784b4c6a0424a40f00103f901bb70151a0000000092030b424c4f434b20484f555345"
+                            }
+                          ]
+                        },
+                        "isError": false
+                      }
+                    }
+                  },
+                  "listPlaceCategoriesSuccess": {
+                    "summary": "Representative place category catalog",
+                    "description": "Representative response containing 30 diverse categories. Call `list_place_categories` to retrieve the complete current catalog.",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 1,
+                      "result": {
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{\"count\":30,\"categories\":[\"accommodation.hotel\",\"activity.sport_club\",\"administrative.city_level\",\"airport.international\",\"amenity.drinking_water\",\"beach.beach_resort\",\"building.office\",\"camping.camp_site\",\"catering.restaurant\",\"catering.cafe\",\"commercial.supermarket\",\"commercial.clothing\",\"education.school\",\"emergency.ambulance_station\",\"entertainment.cinema\",\"healthcare.hospital\",\"leisure.park\",\"natural.forest\",\"office.company\",\"parking\",\"pet\",\"populated_place.city\",\"public_transport.bus\",\"railway.train\",\"rental.bicycle\",\"service.financial\",\"ski.lift\",\"sport.swimming_pool\",\"tourism.attraction\",\"waterway.water_point\"]}"
+                          }
+                        ],
+                        "structuredContent": {
+                          "count": 30,
+                          "categories": [
+                            "accommodation.hotel",
+                            "activity.sport_club",
+                            "administrative.city_level",
+                            "airport.international",
+                            "amenity.drinking_water",
+                            "beach.beach_resort",
+                            "building.office",
+                            "camping.camp_site",
+                            "catering.restaurant",
+                            "catering.cafe",
+                            "commercial.supermarket",
+                            "commercial.clothing",
+                            "education.school",
+                            "emergency.ambulance_station",
+                            "entertainment.cinema",
+                            "healthcare.hospital",
+                            "leisure.park",
+                            "natural.forest",
+                            "office.company",
+                            "parking",
+                            "pet",
+                            "populated_place.city",
+                            "public_transport.bus",
+                            "railway.train",
+                            "rental.bicycle",
+                            "service.financial",
+                            "ski.lift",
+                            "sport.swimming_pool",
+                            "tourism.attraction",
+                            "waterway.water_point"
+                          ]
+                        },
+                        "isError": false
+                      }
+                    }
+                  },
+                  "calculateRouteSuccess": {
+                    "summary": "Route result",
+                    "description": "Live response for the calculateRouteDrive request example.",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 1,
+                      "result": {
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{\"distance\":2250,\"units\":\"metric\",\"distance_units\":\"meters\",\"time\":222.763,\"time_units\":\"seconds\",\"waypoints\":[{\"lat\":52.52,\"lon\":13.405},{\"lat\":52.51,\"lon\":13.39}],\"legs\":[{\"distance\":2250,\"time\":222.763}]}"
+                          }
+                        ],
+                        "structuredContent": {
+                          "distance": 2250,
+                          "units": "metric",
+                          "distance_units": "meters",
+                          "time": 222.763,
+                          "time_units": "seconds",
+                          "waypoints": [
+                            {
+                              "lat": 52.52,
+                              "lon": 13.405
+                            },
+                            {
+                              "lat": 52.51,
+                              "lon": 13.39
+                            }
+                          ],
+                          "legs": [
+                            {
+                              "distance": 2250,
+                              "time": 222.763
+                            }
+                          ]
+                        },
+                        "isError": false
+                      }
+                    }
+                  },
+                  "calculateRouteMatrixSuccess": {
+                    "summary": "Route matrix result",
+                    "description": "Live response for the calculateRouteMatrixSymmetric request example.",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 1,
+                      "result": {
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{\"sources\":[{\"lat\":52.520013,\"lon\":13.404987},{\"lat\":52.509996,\"lon\":13.389986}],\"targets\":[{\"lat\":52.520013,\"lon\":13.404987},{\"lat\":52.509996,\"lon\":13.389986}],\"sources_to_targets\":[[{\"distance\":0,\"time\":0,\"source_index\":0,\"target_index\":0},{\"distance\":2250,\"time\":222,\"source_index\":0,\"target_index\":1}],[{\"distance\":1960,\"time\":154,\"source_index\":1,\"target_index\":0},{\"distance\":0,\"time\":0,\"source_index\":1,\"target_index\":1}]],\"units\":\"metric\",\"distance_units\":\"meters\",\"time_units\":\"seconds\"}"
+                          }
+                        ],
+                        "structuredContent": {
+                          "sources": [
+                            {
+                              "lat": 52.520013,
+                              "lon": 13.404987
+                            },
+                            {
+                              "lat": 52.509996,
+                              "lon": 13.389986
+                            }
+                          ],
+                          "targets": [
+                            {
+                              "lat": 52.520013,
+                              "lon": 13.404987
+                            },
+                            {
+                              "lat": 52.509996,
+                              "lon": 13.389986
+                            }
+                          ],
+                          "sources_to_targets": [
+                            [
+                              {
+                                "distance": 0,
+                                "time": 0,
+                                "source_index": 0,
+                                "target_index": 0
+                              },
+                              {
+                                "distance": 2250,
+                                "time": 222,
+                                "source_index": 0,
+                                "target_index": 1
+                              }
+                            ],
+                            [
+                              {
+                                "distance": 1960,
+                                "time": 154,
+                                "source_index": 1,
+                                "target_index": 0
+                              },
+                              {
+                                "distance": 0,
+                                "time": 0,
+                                "source_index": 1,
+                                "target_index": 1
+                              }
+                            ]
+                          ],
+                          "units": "metric",
+                          "distance_units": "meters",
+                          "time_units": "seconds"
+                        },
+                        "isError": false
+                      }
+                    }
+                  },
+                  "geocodeAddressValidationError": {
+                    "summary": "Tool validation failure",
+                    "description": "Tool argument errors are MCP results with HTTP 200 and isError set to true.",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 1,
+                      "result": {
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{\"statusCode\":400,\"error\":\"Bad Request\",\"message\":\"\\\"query\\\" is required\"}"
+                          }
+                        ],
+                        "isError": true
+                      }
+                    }
+                  },
+                  "unknownTool": {
+                    "summary": "Unknown MCP tool",
+                    "description": "An unknown tool name is returned as a JSON-RPC invalid-params error with HTTP 200.",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 1,
+                      "error": {
+                        "code": -32602,
+                        "message": "Unknown tool: unknown_tool"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted notification request with no JSON-RPC response body."
+          },
+          "400": {
+            "description": "Invalid HTTP request or unsupported MCP protocol version. Tool validation errors are returned with HTTP 200 and result.isError set to true.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "statusCode": 400,
+                  "error": "Bad Request",
+                  "message": "MCP-Protocol-Version header must be \"2025-06-18\""
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid Geoapify API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "statusCode": 401,
+                  "error": "Unauthorized",
+                  "message": "Invalid apiKey"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit or quota exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "statusCode": 429,
+                  "error": "Too Many Requests",
+                  "message": "Quota exceeded"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal gateway error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "statusCode": 500,
+                  "error": "Internal Server Error",
+                  "message": "Request failed, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "JsonRpcId": {
+        "description": "JSON-RPC request identifier. The server echoes this value in the response.",
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "InitializeRequest": {
+        "type": "object",
+        "description": "JSON-RPC request that initializes an MCP client session.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP initialize method.",
+            "const": "initialize"
+          },
+          "params": {
+            "description": "Optional MCP initialize parameters supplied by the client.",
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "ToolsListRequest": {
+        "type": "object",
+        "description": "JSON-RPC request that lists available MCP tools and their input schemas.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method that lists tools.",
+            "const": "tools/list"
+          },
+          "params": {
+            "description": "Optional tools/list parameters.",
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "NotificationRequest": {
+        "type": "object",
+        "description": "JSON-RPC notification request. Notifications do not receive a JSON-RPC response and must not include id.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "method"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "method": {
+            "description": "MCP notification method name.",
+            "type": "string",
+            "pattern": "^notifications/"
+          },
+          "params": {
+            "description": "Optional notification parameters.",
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "not": {
+          "required": [
+            "id"
+          ]
+        }
+      },
+      "JsonRpcError": {
+        "type": "object",
+        "description": "JSON-RPC error object.",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "JSON-RPC error code, such as -32600 for an invalid request, -32601 for an unknown method, or -32602 for invalid parameters."
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable JSON-RPC error message."
+          },
+          "data": {
+            "description": "Optional machine-readable error details."
+          }
+        }
+      },
+      "JsonRpcErrorResponse": {
+        "type": "object",
+        "description": "JSON-RPC error response returned for invalid requests or unknown methods.",
+        "required": [
+          "jsonrpc",
+          "id",
+          "error"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "const": "2.0"
+          },
+          "id": {
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "error": {
+            "$ref": "#/components/schemas/JsonRpcError"
+          }
+        }
+      },
+      "InitializeResponse": {
+        "type": "object",
+        "description": "Successful JSON-RPC response for initialize.",
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "const": "2.0"
+          },
+          "id": {
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "result": {
+            "type": "object",
+            "required": [
+              "protocolVersion",
+              "serverInfo",
+              "capabilities"
+            ],
+            "properties": {
+              "protocolVersion": {
+                "type": "string"
+              },
+              "serverInfo": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "version"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  }
+                }
+              },
+              "capabilities": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      },
+      "ToolMetadata": {
+        "type": "object",
+        "description": "MCP tool metadata returned by tools/list.",
+        "required": [
+          "name",
+          "description",
+          "inputSchema",
+          "outputSchema",
+          "_meta"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "inputSchema": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "outputSchema": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "_meta": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "geoapify/category"
+            ],
+            "properties": {
+              "geoapify/category": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ToolsListResponse": {
+        "type": "object",
+        "description": "Successful JSON-RPC response for tools/list.",
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "const": "2.0"
+          },
+          "id": {
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "result": {
+            "type": "object",
+            "required": [
+              "tools"
+            ],
+            "properties": {
+              "tools": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ToolMetadata"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ToolCallResponse": {
+        "type": "object",
+        "description": "Successful JSON-RPC response for tools/call. Tool failures are returned with isError set to true.",
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "const": "2.0"
+          },
+          "id": {
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "result": {
+            "type": "object",
+            "required": [
+              "content",
+              "isError"
+            ],
+            "properties": {
+              "content": {
+                "type": "array",
+                "description": "Text representation of the structured result or error.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "text"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string",
+                      "description": "JSON-encoded tool result or GatewayError object."
+                    }
+                  }
+                }
+              },
+              "structuredContent": true,
+              "isError": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "McpResponse": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/InitializeResponse"
+          },
+          {
+            "$ref": "#/components/schemas/ToolsListResponse"
+          },
+          {
+            "$ref": "#/components/schemas/ToolCallResponse"
+          },
+          {
+            "$ref": "#/components/schemas/JsonRpcErrorResponse"
+          }
+        ]
+      },
+      "GatewayError": {
+        "type": "object",
+        "description": "HTTP gateway error returned before or outside JSON-RPC tool execution.",
+        "required": [
+          "statusCode",
+          "error",
+          "message"
+        ],
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "description": "HTTP status code."
+          },
+          "error": {
+            "type": "string",
+            "description": "HTTP error name."
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message."
+          }
+        }
+      },
+      "GeocodeAddressInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "query"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "Street address or free-text location query to geocode."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "default": 5,
+            "description": "Maximum number of results to return."
+          },
+          "lang": {
+            "type": "string",
+            "default": "en",
+            "description": "Result language as a supported two-letter language code."
+          },
+          "country_codes": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional ISO 3166-1 alpha-2 country code filters, for example \"de\" or \"us\". Values are case-insensitive and normalized to lowercase."
+          }
+        }
+      },
+      "GeocodeAddressOutput": {
+        "type": "object",
+        "description": "Compact geocoding result for a free-text query. See the focused tool specification for the complete output contract."
+      },
+      "GeocodeAddressToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for geocode_address.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "geocode_address"
+          },
+          "arguments": {
+            "description": "Arguments validated by the geocode_address input schema.",
+            "$ref": "#/components/schemas/GeocodeAddressInput"
+          }
+        }
+      },
+      "GeocodeAddressToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the geocode_address MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for geocode_address.",
+            "$ref": "#/components/schemas/GeocodeAddressToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "geocode_address",
+              "arguments": {
+                "query": "Berlin",
+                "limit": 1,
+                "lang": "en"
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "geocode_address",
+        "x-geoapify-mcp-category": "Geocoding",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/GeocodeAddressInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/GeocodeAddressOutput"
+      },
+      "GeocodeStructuredAddressInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "Place or venue name, for example \"Central Station\"."
+          },
+          "housenumber": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "House or building number. Use together with street."
+          },
+          "street": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "Street name without city, state, or country."
+          },
+          "postcode": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "Postal or ZIP code."
+          },
+          "city": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "City, town, village, or locality."
+          },
+          "state": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "State, region, province, or administrative area."
+          },
+          "country": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "Country name."
+          },
+          "country_codes": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional ISO 3166-1 alpha-2 country code filters, for example \"de\" or \"us\". Values are case-insensitive and normalized to lowercase."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "default": 5,
+            "description": "Maximum number of results to return."
+          },
+          "lang": {
+            "type": "string",
+            "default": "en",
+            "description": "Result language as a supported two-letter language code."
+          }
+        },
+        "anyOf": [
+          {
+            "required": [
+              "name"
+            ]
+          },
+          {
+            "required": [
+              "street"
+            ]
+          },
+          {
+            "required": [
+              "postcode"
+            ]
+          },
+          {
+            "required": [
+              "city"
+            ]
+          },
+          {
+            "required": [
+              "state"
+            ]
+          },
+          {
+            "required": [
+              "country"
+            ]
+          }
+        ]
+      },
+      "GeocodeStructuredAddressOutput": {
+        "type": "object",
+        "description": "Compact geocoding result for structured address components. See the focused tool specification for the complete output contract."
+      },
+      "GeocodeStructuredAddressToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for geocode_structured_address.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "geocode_structured_address"
+          },
+          "arguments": {
+            "description": "Arguments validated by the geocode_structured_address input schema.",
+            "$ref": "#/components/schemas/GeocodeStructuredAddressInput"
+          }
+        }
+      },
+      "GeocodeStructuredAddressToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the geocode_structured_address MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for geocode_structured_address.",
+            "$ref": "#/components/schemas/GeocodeStructuredAddressToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "geocode_structured_address",
+              "arguments": {
+                "street": "Unter den Linden",
+                "city": "Berlin",
+                "country": "Germany",
+                "limit": 1,
+                "lang": "en"
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "geocode_structured_address",
+        "x-geoapify-mcp-category": "Geocoding",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/GeocodeStructuredAddressInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/GeocodeStructuredAddressOutput"
+      },
+      "ReverseGeocodeCoordinatesInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "lat",
+          "lon"
+        ],
+        "properties": {
+          "lat": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude of the coordinate to reverse geocode."
+          },
+          "lon": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude of the coordinate to reverse geocode."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "default": 1,
+            "description": "Maximum number of nearby address or place results to return."
+          },
+          "lang": {
+            "type": "string",
+            "default": "en",
+            "description": "Result language as a supported two-letter language code."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "country",
+              "state",
+              "city",
+              "postcode",
+              "street",
+              "amenity",
+              "locality",
+              "building"
+            ],
+            "description": "Optional result granularity, for example building for address-level results, city for city-level results, or postcode for postal-code results."
+          },
+          "country_codes": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional ISO 3166-1 alpha-2 country code filters, for example \"de\" or \"us\". Values are case-insensitive and normalized to lowercase."
+          }
+        }
+      },
+      "ReverseGeocodeCoordinatesOutput": {
+        "type": "object",
+        "description": "Compact reverse-geocoding result for one coordinate. See the focused tool specification for the complete output contract."
+      },
+      "ReverseGeocodeCoordinatesToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for reverse_geocode_coordinates.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "reverse_geocode_coordinates"
+          },
+          "arguments": {
+            "description": "Arguments validated by the reverse_geocode_coordinates input schema.",
+            "$ref": "#/components/schemas/ReverseGeocodeCoordinatesInput"
+          }
+        }
+      },
+      "ReverseGeocodeCoordinatesToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the reverse_geocode_coordinates MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for reverse_geocode_coordinates.",
+            "$ref": "#/components/schemas/ReverseGeocodeCoordinatesToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "reverse_geocode_coordinates",
+              "arguments": {
+                "lat": 52.52,
+                "lon": 13.405,
+                "limit": 1,
+                "lang": "en"
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "reverse_geocode_coordinates",
+        "x-geoapify-mcp-category": "Geocoding",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/ReverseGeocodeCoordinatesInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/ReverseGeocodeCoordinatesOutput"
+      },
+      "SearchPlacesInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "category",
+          "lat",
+          "lon"
+        ],
+        "properties": {
+          "category": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9_-]+(?:\\.[a-z0-9_-]+)*$",
+            "description": "Place category to find. Call list_place_categories first to get the supported category values."
+          },
+          "lat": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude of the search center."
+          },
+          "lon": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude of the search center."
+          },
+          "radius_meters": {
+            "type": "number",
+            "minimum": 1,
+            "description": "Optional search radius in meters. When omitted, returns the nearest matching places without a hard distance limit."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 20,
+            "description": "Maximum number of places to return."
+          },
+          "lang": {
+            "type": "string",
+            "default": "en",
+            "description": "Result language as a supported two-letter language code."
+          }
+        }
+      },
+      "SearchPlacesOutput": {
+        "type": "object",
+        "description": "Places matching one category around a coordinate. See the focused tool specification for the complete output contract."
+      },
+      "SearchPlacesToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for search_places.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "search_places"
+          },
+          "arguments": {
+            "description": "Arguments validated by the search_places input schema.",
+            "$ref": "#/components/schemas/SearchPlacesInput"
+          }
+        }
+      },
+      "SearchPlacesToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the search_places MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for search_places.",
+            "$ref": "#/components/schemas/SearchPlacesToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "search_places",
+              "arguments": {
+                "category": "catering.restaurant",
+                "lat": 52.52,
+                "lon": 13.405,
+                "radius_meters": 1000,
+                "limit": 1,
+                "lang": "en"
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "search_places",
+        "x-geoapify-mcp-category": "Places",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/SearchPlacesInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/SearchPlacesOutput"
+      },
+      "ListPlaceCategoriesInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "ListPlaceCategoriesOutput": {
+        "type": "object",
+        "description": "Supported category catalog for search_places. See the focused tool specification for the complete output contract."
+      },
+      "ListPlaceCategoriesToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for list_place_categories.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "list_place_categories"
+          },
+          "arguments": {
+            "description": "Arguments validated by the list_place_categories input schema.",
+            "$ref": "#/components/schemas/ListPlaceCategoriesInput"
+          }
+        }
+      },
+      "ListPlaceCategoriesToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the list_place_categories MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for list_place_categories.",
+            "$ref": "#/components/schemas/ListPlaceCategoriesToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "list_place_categories",
+              "arguments": {}
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "list_place_categories",
+        "x-geoapify-mcp-category": "Places",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/ListPlaceCategoriesInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/ListPlaceCategoriesOutput"
+      },
+      "CalculateRouteInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "waypoints"
+        ],
+        "properties": {
+          "waypoints": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "lat",
+                "lon"
+              ],
+              "properties": {
+                "lat": {
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90,
+                  "description": "Waypoint latitude."
+                },
+                "lon": {
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180,
+                  "description": "Waypoint longitude."
+                }
+              }
+            },
+            "description": "Ordered route waypoints. Provide at least an origin and destination."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "drive",
+              "light_truck",
+              "medium_truck",
+              "truck",
+              "heavy_truck",
+              "truck_dangerous_goods",
+              "long_truck",
+              "bus",
+              "scooter",
+              "motorcycle",
+              "bicycle",
+              "mountain_bike",
+              "road_bike",
+              "walk",
+              "hike",
+              "transit",
+              "approximated_transit"
+            ],
+            "default": "drive",
+            "description": "Travel or vehicle mode used to calculate the route."
+          },
+          "waypoint_mode": {
+            "type": "string",
+            "enum": [
+              "stopover",
+              "through_stop",
+              "pass_through"
+            ],
+            "default": "stopover",
+            "description": "How intermediate waypoints are treated."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "balanced",
+              "short",
+              "less_maneuvers"
+            ],
+            "default": "balanced",
+            "description": "Route optimization preference."
+          },
+          "avoid": {
+            "type": "array",
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "tolls",
+                "ferries",
+                "highways"
+              ]
+            },
+            "description": "Route features to avoid. Supported values are \"tolls\", \"ferries\", and \"highways\"."
+          },
+          "geometry_scope": {
+            "type": "string",
+            "enum": [
+              "none",
+              "route",
+              "legs",
+              "steps"
+            ],
+            "default": "route",
+            "description": "Geometry detail to return: none, route only, route and legs, or route, legs, and instruction steps."
+          },
+          "geometry_format": {
+            "type": "string",
+            "enum": [
+              "geojson",
+              "polyline"
+            ],
+            "default": "geojson",
+            "description": "Return geometry as a GeoJSON geometry object or an encoded precision-5 polyline."
+          },
+          "include_instructions": {
+            "type": "boolean",
+            "default": false,
+            "description": "Include detailed turn-by-turn instruction steps."
+          },
+          "optimize_stops": {
+            "type": "boolean",
+            "default": false,
+            "description": "Optimize the order of intermediate stops while preserving the first and last waypoint."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "Distance and speed units."
+          },
+          "lang": {
+            "type": "string",
+            "enum": [
+              "bg",
+              "ca",
+              "cs",
+              "da",
+              "de",
+              "el",
+              "en-GB",
+              "en",
+              "es",
+              "et",
+              "fi",
+              "fr",
+              "hi",
+              "hu",
+              "it",
+              "ja",
+              "nb-NO",
+              "nl",
+              "pl",
+              "pt-BR",
+              "pt",
+              "ro",
+              "ru",
+              "sk",
+              "sl",
+              "sv",
+              "tr",
+              "uk"
+            ],
+            "default": "en",
+            "description": "Language used for turn-by-turn instructions."
+          },
+          "traffic": {
+            "type": "string",
+            "enum": [
+              "free_flow",
+              "approximated"
+            ],
+            "default": "free_flow",
+            "description": "Traffic model used for motorized routing."
+          }
+        }
+      },
+      "CalculateRouteOutput": {
+        "type": "object",
+        "description": "Route totals, resolved waypoints, legs, and optional geometry. See the focused tool specification for the complete output contract."
+      },
+      "CalculateRouteToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for calculate_route.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "calculate_route"
+          },
+          "arguments": {
+            "description": "Arguments validated by the calculate_route input schema.",
+            "$ref": "#/components/schemas/CalculateRouteInput"
+          }
+        }
+      },
+      "CalculateRouteToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the calculate_route MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for calculate_route.",
+            "$ref": "#/components/schemas/CalculateRouteToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "calculate_route",
+              "arguments": {
+                "waypoints": [
+                  {
+                    "lat": 52.52,
+                    "lon": 13.405
+                  },
+                  {
+                    "lat": 52.51,
+                    "lon": 13.39
+                  }
+                ],
+                "mode": "drive",
+                "geometry_scope": "none",
+                "include_instructions": false,
+                "units": "metric"
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "calculate_route",
+        "x-geoapify-mcp-category": "Routing",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/CalculateRouteInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/CalculateRouteOutput"
+      },
+      "CalculateRouteMatrixInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sources"
+        ],
+        "properties": {
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "lat",
+                "lon"
+              ],
+              "properties": {
+                "lat": {
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90,
+                  "description": "Location latitude."
+                },
+                "lon": {
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180,
+                  "description": "Location longitude."
+                }
+              }
+            },
+            "description": "Matrix source locations. sources.length multiplied by targets.length must not exceed 1000."
+          },
+          "targets": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "lat",
+                "lon"
+              ],
+              "properties": {
+                "lat": {
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90,
+                  "description": "Location latitude."
+                },
+                "lon": {
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180,
+                  "description": "Location longitude."
+                }
+              }
+            },
+            "description": "Matrix target locations. Defaults to the source locations when omitted. sources.length multiplied by targets.length must not exceed 1000."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "drive",
+              "truck",
+              "light_truck",
+              "medium_truck",
+              "bus",
+              "motorcycle",
+              "scooter",
+              "bicycle",
+              "walk",
+              "hike"
+            ],
+            "default": "drive",
+            "description": "Travel or vehicle mode used to calculate the matrix."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "balanced",
+              "short",
+              "less_maneuvers"
+            ],
+            "default": "balanced",
+            "description": "Route optimization preference."
+          },
+          "traffic": {
+            "type": "string",
+            "enum": [
+              "free_flow",
+              "approximated"
+            ],
+            "default": "free_flow",
+            "description": "Traffic model used for motorized routing."
+          },
+          "avoid": {
+            "type": "array",
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "tolls",
+                "highways",
+                "ferries"
+              ]
+            },
+            "description": "Route features to avoid. Supported values are \"tolls\", \"highways\", and \"ferries\"."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric",
+            "description": "Distance and speed units."
+          }
+        }
+      },
+      "CalculateRouteMatrixOutput": {
+        "type": "object",
+        "description": "Resolved matrix locations and source-to-target travel costs. See the focused tool specification for the complete output contract."
+      },
+      "CalculateRouteMatrixToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for calculate_route_matrix.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "calculate_route_matrix"
+          },
+          "arguments": {
+            "description": "Arguments validated by the calculate_route_matrix input schema.",
+            "$ref": "#/components/schemas/CalculateRouteMatrixInput"
+          }
+        }
+      },
+      "CalculateRouteMatrixToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the calculate_route_matrix MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for calculate_route_matrix.",
+            "$ref": "#/components/schemas/CalculateRouteMatrixToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+              "name": "calculate_route_matrix",
+              "arguments": {
+                "sources": [
+                  {
+                    "lat": 52.52,
+                    "lon": 13.405
+                  },
+                  {
+                    "lat": 52.51,
+                    "lon": 13.39
+                  }
+                ],
+                "mode": "drive"
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "calculate_route_matrix",
+        "x-geoapify-mcp-category": "Routing",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/CalculateRouteMatrixInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/CalculateRouteMatrixOutput"
+      },
+      "CombineGeometriesIntersectionInput": {
+        "type": "object",
+        "title": "intersection",
+        "description": "Return the area shared by all input polygons.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometries"
+        ],
+        "properties": {
+          "operation": {
+            "const": "intersection",
+            "description": "Return the area shared by all input polygons."
+          },
+          "geometries": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "description": "GeoJSON Geometry (Polygon, or MultiPolygon); not a Feature or FeatureCollection."
+            },
+            "description": "GeoJSON geometries to combine."
+          }
+        }
+      },
+      "CombineGeometriesIntersectionOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }` for the shared Polygon or MultiPolygon area, or `{ \"type\": \"empty\", \"data\": null }` when the inputs have no shared area."
+      },
+      "CombineGeometriesDifferenceInput": {
+        "type": "object",
+        "title": "difference",
+        "description": "Subtract every later polygon from the first polygon.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometries"
+        ],
+        "properties": {
+          "operation": {
+            "const": "difference",
+            "description": "Subtract every later polygon from the first polygon."
+          },
+          "geometries": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "description": "GeoJSON Geometry (Polygon, or MultiPolygon); not a Feature or FeatureCollection."
+            },
+            "description": "Ordered polygons. Every geometry after the first is subtracted from the first."
+          }
+        }
+      },
+      "CombineGeometriesDifferenceOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }` for the part of the first Polygon or MultiPolygon that remains, or `{ \"type\": \"empty\", \"data\": null }` when nothing remains."
+      },
+      "CombineGeometriesUnionInput": {
+        "type": "object",
+        "title": "union",
+        "description": "Merge two or more polygons into their geometric union.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometries"
+        ],
+        "properties": {
+          "operation": {
+            "const": "union",
+            "description": "Merge two or more polygons into their geometric union."
+          },
+          "geometries": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "description": "GeoJSON Geometry (Polygon, or MultiPolygon); not a Feature or FeatureCollection."
+            },
+            "description": "GeoJSON geometries to combine."
+          }
+        }
+      },
+      "CombineGeometriesUnionOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }` containing the merged Polygon or MultiPolygon."
+      },
+      "CombineGeometriesEnvelopeInput": {
+        "type": "object",
+        "title": "envelope",
+        "description": "Return a rectangular envelope containing all input geometries.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometries"
+        ],
+        "properties": {
+          "operation": {
+            "const": "envelope",
+            "description": "Return a rectangular envelope containing all input geometries."
+          },
+          "geometries": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+            },
+            "description": "GeoJSON geometries to combine."
+          }
+        }
+      },
+      "CombineGeometriesEnvelopeOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }` containing the rectangular Polygon that encloses all input geometries."
+      },
+      "CombineGeometriesInput": {
+        "description": "Choose one combination operation. Each branch lists the exact accepted geometry types and limits.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/CombineGeometriesIntersectionInput"
+          },
+          {
+            "$ref": "#/components/schemas/CombineGeometriesDifferenceInput"
+          },
+          {
+            "$ref": "#/components/schemas/CombineGeometriesUnionInput"
+          },
+          {
+            "$ref": "#/components/schemas/CombineGeometriesEnvelopeInput"
+          }
+        ]
+      },
+      "CombineGeometriesOutput": {
+        "type": "object",
+        "description": "Typed geometry-operation result. The type value determines the data schema. See the focused tool specification for the complete output contract."
+      },
+      "CombineGeometriesToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for combine_geometries.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "combine_geometries"
+          },
+          "arguments": {
+            "description": "Arguments validated by the combine_geometries input schema.",
+            "$ref": "#/components/schemas/CombineGeometriesInput"
+          }
+        }
+      },
+      "CombineGeometriesToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the combine_geometries MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for combine_geometries.",
+            "$ref": "#/components/schemas/CombineGeometriesToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 10,
+            "method": "tools/call",
+            "params": {
+              "name": "combine_geometries",
+              "arguments": {
+                "operation": "intersection",
+                "geometries": [
+                  {
+                    "type": "Polygon",
+                    "coordinates": [
+                      [
+                        [
+                          13.38,
+                          52.5
+                        ],
+                        [
+                          13.42,
+                          52.5
+                        ],
+                        [
+                          13.42,
+                          52.54
+                        ],
+                        [
+                          13.38,
+                          52.54
+                        ],
+                        [
+                          13.38,
+                          52.5
+                        ]
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "Polygon",
+                    "coordinates": [
+                      [
+                        [
+                          13.4,
+                          52.51
+                        ],
+                        [
+                          13.44,
+                          52.51
+                        ],
+                        [
+                          13.44,
+                          52.55
+                        ],
+                        [
+                          13.4,
+                          52.55
+                        ],
+                        [
+                          13.4,
+                          52.51
+                        ]
+                      ]
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "combine_geometries",
+        "x-geoapify-mcp-category": "Utilities",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/CombineGeometriesInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/CombineGeometriesOutput",
+        "x-geoapify-mcp-operations": [
+          {
+            "name": "intersection",
+            "description": "Return the area shared by all input polygons.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/CombineGeometriesIntersectionInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/CombineGeometriesIntersectionOutput"
+            }
+          },
+          {
+            "name": "difference",
+            "description": "Subtract every later polygon from the first polygon.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/CombineGeometriesDifferenceInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/CombineGeometriesDifferenceOutput"
+            }
+          },
+          {
+            "name": "union",
+            "description": "Merge two or more polygons into their geometric union.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/CombineGeometriesUnionInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/CombineGeometriesUnionOutput"
+            }
+          },
+          {
+            "name": "envelope",
+            "description": "Return a rectangular envelope containing all input geometries.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/CombineGeometriesEnvelopeInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/CombineGeometriesEnvelopeOutput"
+            }
+          }
+        ]
+      },
+      "EvaluateSpatialRelationContainsInput": {
+        "type": "object",
+        "title": "contains",
+        "description": "Return true when geometry contains other_geometry.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "contains",
+            "description": "Return true when geometry contains other_geometry."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "Subject operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection. Operand order is significant."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Comparison operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "EvaluateSpatialRelationContainsOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"boolean\", \"data\": boolean }`; `data` is `true` when `geometry` contains `other_geometry`, and `false` otherwise."
+      },
+      "EvaluateSpatialRelationCrossesInput": {
+        "type": "object",
+        "title": "crosses",
+        "description": "Return true when the geometries cross one another.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "crosses",
+            "description": "Return true when the geometries cross one another."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "Subject operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection. Operand order is significant."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Comparison operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "EvaluateSpatialRelationCrossesOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"boolean\", \"data\": boolean }`; `data` is `true` when the two geometries cross, and `false` otherwise."
+      },
+      "EvaluateSpatialRelationDisjointInput": {
+        "type": "object",
+        "title": "disjoint",
+        "description": "Return true when the geometries share no point.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "disjoint",
+            "description": "Return true when the geometries share no point."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "Subject operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection. Operand order is significant."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Comparison operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "EvaluateSpatialRelationDisjointOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"boolean\", \"data\": boolean }`; `data` is `true` when the two geometries share no point, and `false` otherwise."
+      },
+      "EvaluateSpatialRelationIntersectsInput": {
+        "type": "object",
+        "title": "intersects",
+        "description": "Return true when the geometries share at least one point.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "intersects",
+            "description": "Return true when the geometries share at least one point."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "Subject operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection. Operand order is significant."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Comparison operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "EvaluateSpatialRelationIntersectsOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"boolean\", \"data\": boolean }`; `data` is `true` when the two geometries share at least one point, and `false` otherwise."
+      },
+      "EvaluateSpatialRelationWithinInput": {
+        "type": "object",
+        "title": "within",
+        "description": "Return true when geometry is completely within other_geometry.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "within",
+            "description": "Return true when geometry is completely within other_geometry."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "Subject operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection. Operand order is significant."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Comparison operand; GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "EvaluateSpatialRelationWithinOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"boolean\", \"data\": boolean }`; `data` is `true` when `geometry` is completely within `other_geometry`, and `false` otherwise."
+      },
+      "EvaluateSpatialRelationValidInput": {
+        "type": "object",
+        "title": "valid",
+        "description": "Check whether one GeoJSON geometry is valid.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "valid",
+            "description": "Return true when geometry is a valid GeoJSON geometry."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "EvaluateSpatialRelationValidOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"boolean\", \"data\": boolean }`; `data` is `true` when `geometry` is valid, and `false` otherwise."
+      },
+      "EvaluateSpatialRelationPointOnLineInput": {
+        "type": "object",
+        "title": "point_on_line",
+        "description": "Check whether a point lies on a line.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "point_on_line",
+            "description": "Return true when the Point lies on the LineString."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "Point to test; GeoJSON Geometry (Point); not a Feature or FeatureCollection."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Line to test against; GeoJSON Geometry (LineString); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "EvaluateSpatialRelationPointOnLineOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"boolean\", \"data\": boolean }`; `data` is `true` when the supplied Point lies on the supplied LineString, and `false` otherwise."
+      },
+      "EvaluateSpatialRelationInput": {
+        "description": "Choose one spatial predicate. The selected branch defines the required operands and geometry types.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/EvaluateSpatialRelationContainsInput"
+          },
+          {
+            "$ref": "#/components/schemas/EvaluateSpatialRelationCrossesInput"
+          },
+          {
+            "$ref": "#/components/schemas/EvaluateSpatialRelationDisjointInput"
+          },
+          {
+            "$ref": "#/components/schemas/EvaluateSpatialRelationIntersectsInput"
+          },
+          {
+            "$ref": "#/components/schemas/EvaluateSpatialRelationWithinInput"
+          },
+          {
+            "$ref": "#/components/schemas/EvaluateSpatialRelationValidInput"
+          },
+          {
+            "$ref": "#/components/schemas/EvaluateSpatialRelationPointOnLineInput"
+          }
+        ]
+      },
+      "EvaluateSpatialRelationOutput": {
+        "type": "object",
+        "description": "Typed geometry-operation result. The type value determines the data schema. See the focused tool specification for the complete output contract."
+      },
+      "EvaluateSpatialRelationToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for evaluate_spatial_relation.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "evaluate_spatial_relation"
+          },
+          "arguments": {
+            "description": "Arguments validated by the evaluate_spatial_relation input schema.",
+            "$ref": "#/components/schemas/EvaluateSpatialRelationInput"
+          }
+        }
+      },
+      "EvaluateSpatialRelationToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the evaluate_spatial_relation MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for evaluate_spatial_relation.",
+            "$ref": "#/components/schemas/EvaluateSpatialRelationToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 13,
+            "method": "tools/call",
+            "params": {
+              "name": "evaluate_spatial_relation",
+              "arguments": {
+                "operation": "contains",
+                "geometry": {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        13.38,
+                        52.5
+                      ],
+                      [
+                        13.42,
+                        52.5
+                      ],
+                      [
+                        13.42,
+                        52.54
+                      ],
+                      [
+                        13.38,
+                        52.54
+                      ],
+                      [
+                        13.38,
+                        52.5
+                      ]
+                    ]
+                  ]
+                },
+                "other_geometry": {
+                  "type": "Point",
+                  "coordinates": [
+                    13.405,
+                    52.52
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "evaluate_spatial_relation",
+        "x-geoapify-mcp-category": "Utilities",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/EvaluateSpatialRelationInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/EvaluateSpatialRelationOutput",
+        "x-geoapify-mcp-operations": [
+          {
+            "name": "contains",
+            "description": "Return true when geometry contains other_geometry.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationContainsInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationContainsOutput"
+            }
+          },
+          {
+            "name": "crosses",
+            "description": "Return true when the geometries cross one another.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationCrossesInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationCrossesOutput"
+            }
+          },
+          {
+            "name": "disjoint",
+            "description": "Return true when the geometries share no point.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationDisjointInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationDisjointOutput"
+            }
+          },
+          {
+            "name": "intersects",
+            "description": "Return true when the geometries share at least one point.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationIntersectsInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationIntersectsOutput"
+            }
+          },
+          {
+            "name": "within",
+            "description": "Return true when geometry is completely within other_geometry.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationWithinInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationWithinOutput"
+            }
+          },
+          {
+            "name": "valid",
+            "description": "Check whether one GeoJSON geometry is valid.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationValidInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationValidOutput"
+            }
+          },
+          {
+            "name": "point_on_line",
+            "description": "Check whether a point lies on a line.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationPointOnLineInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/EvaluateSpatialRelationPointOnLineOutput"
+            }
+          }
+        ]
+      },
+      "MeasureGeometryAreaInput": {
+        "type": "object",
+        "title": "area",
+        "description": "Calculate Polygon or MultiPolygon area in square meters.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "area",
+            "description": "Calculate Polygon or MultiPolygon area in square meters."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Polygon, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "MeasureGeometryAreaOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"number\", \"data\": number }`; `data` is the area in square meters."
+      },
+      "MeasureGeometryDistanceInput": {
+        "type": "object",
+        "title": "distance",
+        "description": "Calculate the distance between two points.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "distance",
+            "description": "Calculate the distance between two points."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "First point; GeoJSON Geometry (Point); not a Feature or FeatureCollection."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Second point; GeoJSON Geometry (Point); not a Feature or FeatureCollection."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "meters",
+              "metres",
+              "millimeters",
+              "millimetres",
+              "centimeters",
+              "centimetres",
+              "kilometers",
+              "kilometres",
+              "miles",
+              "nauticalmiles",
+              "inches",
+              "yards",
+              "feet",
+              "radians",
+              "degrees"
+            ],
+            "default": "kilometers",
+            "description": "Units for the distance or length. Defaults to kilometers."
+          }
+        }
+      },
+      "MeasureGeometryDistanceOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"number\", \"data\": number }`; `data` is the point-to-point distance in the selected `units` (kilometers by default)."
+      },
+      "MeasureGeometryLengthInput": {
+        "type": "object",
+        "title": "length",
+        "description": "Calculate LineString or MultiLineString length.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "length",
+            "description": "Calculate LineString or MultiLineString length."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (LineString, or MultiLineString); not a Feature or FeatureCollection."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "meters",
+              "metres",
+              "millimeters",
+              "millimetres",
+              "centimeters",
+              "centimetres",
+              "kilometers",
+              "kilometres",
+              "miles",
+              "nauticalmiles",
+              "inches",
+              "yards",
+              "feet",
+              "radians",
+              "degrees"
+            ],
+            "default": "kilometers",
+            "description": "Units for the distance or length. Defaults to kilometers."
+          }
+        }
+      },
+      "MeasureGeometryLengthOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"number\", \"data\": number }`; `data` is the line length in the selected `units` (kilometers by default)."
+      },
+      "MeasureGeometryBboxInput": {
+        "type": "object",
+        "title": "bbox",
+        "description": "Calculate a rectangular bounding-box Feature.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "bbox",
+            "description": "Calculate a rectangular bounding-box Feature."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          },
+          "recompute": {
+            "type": "boolean",
+            "default": false,
+            "description": "Ignore a pre-existing bbox and recompute bounds from coordinates."
+          }
+        }
+      },
+      "MeasureGeometryBboxOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }`; `data` is a rectangular Polygon Feature whose `properties.bbox` contains `[west, south, east, north]`."
+      },
+      "MeasureGeometryPointToLineDistanceInput": {
+        "type": "object",
+        "title": "point_to_line_distance",
+        "description": "Calculate the shortest distance from a point to a line.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "point_to_line_distance",
+            "description": "Calculate the shortest distance from a point to a line."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "Point to measure from; GeoJSON Geometry (Point); not a Feature or FeatureCollection."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Target line; GeoJSON Geometry (LineString); not a Feature or FeatureCollection."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "meters",
+              "metres",
+              "millimeters",
+              "millimetres",
+              "centimeters",
+              "centimetres",
+              "kilometers",
+              "kilometres",
+              "miles",
+              "nauticalmiles",
+              "inches",
+              "yards",
+              "feet",
+              "radians",
+              "degrees"
+            ],
+            "default": "kilometers",
+            "description": "Units for the distance or length. Defaults to kilometers."
+          }
+        }
+      },
+      "MeasureGeometryPointToLineDistanceOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"number\", \"data\": number }`; `data` is the shortest distance from the Point to the LineString in the selected `units` (kilometers by default)."
+      },
+      "MeasureGeometryPointToPolygonDistanceInput": {
+        "type": "object",
+        "title": "point_to_polygon_distance",
+        "description": "Calculate the shortest distance from a point to a polygon boundary.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "point_to_polygon_distance",
+            "description": "Calculate the shortest distance from a point to a polygon boundary."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "Point to measure from; GeoJSON Geometry (Point); not a Feature or FeatureCollection."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Target polygon; GeoJSON Geometry (Polygon, or MultiPolygon); not a Feature or FeatureCollection."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "meters",
+              "metres",
+              "millimeters",
+              "millimetres",
+              "centimeters",
+              "centimetres",
+              "kilometers",
+              "kilometres",
+              "miles",
+              "nauticalmiles",
+              "inches",
+              "yards",
+              "feet",
+              "radians",
+              "degrees"
+            ],
+            "default": "kilometers",
+            "description": "Units for the distance or length. Defaults to kilometers."
+          }
+        }
+      },
+      "MeasureGeometryPointToPolygonDistanceOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"number\", \"data\": number }`; `data` is the shortest distance from the Point to the Polygon or MultiPolygon boundary in the selected `units` (kilometers by default)."
+      },
+      "MeasureGeometryNearestPointOnLineInput": {
+        "type": "object",
+        "title": "nearest_point_on_line",
+        "description": "Return the nearest point on a line to the supplied point.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "other_geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "nearest_point_on_line",
+            "description": "Return the nearest point on a line to the supplied point."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "Point from which to search; GeoJSON Geometry (Point); not a Feature or FeatureCollection."
+          },
+          "other_geometry": {
+            "type": "object",
+            "description": "Target line; GeoJSON Geometry (LineString, or MultiLineString); not a Feature or FeatureCollection."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "meters",
+              "metres",
+              "millimeters",
+              "millimetres",
+              "centimeters",
+              "centimetres",
+              "kilometers",
+              "kilometres",
+              "miles",
+              "nauticalmiles",
+              "inches",
+              "yards",
+              "feet",
+              "radians",
+              "degrees"
+            ],
+            "default": "kilometers",
+            "description": "Units for the distance or length. Defaults to kilometers."
+          }
+        }
+      },
+      "MeasureGeometryNearestPointOnLineOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }`; `data` is the nearest Point Feature on the target line, including line-location metadata in its properties."
+      },
+      "MeasureGeometryAlongInput": {
+        "type": "object",
+        "title": "along",
+        "description": "Return the point at a distance from the start of a LineString.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "distance"
+        ],
+        "properties": {
+          "operation": {
+            "const": "along",
+            "description": "Return the point at a distance from the start of a LineString."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (LineString); not a Feature or FeatureCollection."
+          },
+          "distance": {
+            "type": "number",
+            "description": "Distance from the start of the LineString in the selected units."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "meters",
+              "metres",
+              "millimeters",
+              "millimetres",
+              "centimeters",
+              "centimetres",
+              "kilometers",
+              "kilometres",
+              "miles",
+              "nauticalmiles",
+              "inches",
+              "yards",
+              "feet",
+              "radians",
+              "degrees"
+            ],
+            "default": "kilometers",
+            "description": "Units for the distance or length. Defaults to kilometers."
+          }
+        }
+      },
+      "MeasureGeometryAlongOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }`; `data` is the Point Feature at `distance` from the start of the LineString."
+      },
+      "MeasureGeometryInput": {
+        "description": "Choose one measurement or point-location operation. Each branch lists only the arguments and GeoJSON types accepted by that operation.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MeasureGeometryAreaInput"
+          },
+          {
+            "$ref": "#/components/schemas/MeasureGeometryDistanceInput"
+          },
+          {
+            "$ref": "#/components/schemas/MeasureGeometryLengthInput"
+          },
+          {
+            "$ref": "#/components/schemas/MeasureGeometryBboxInput"
+          },
+          {
+            "$ref": "#/components/schemas/MeasureGeometryPointToLineDistanceInput"
+          },
+          {
+            "$ref": "#/components/schemas/MeasureGeometryPointToPolygonDistanceInput"
+          },
+          {
+            "$ref": "#/components/schemas/MeasureGeometryNearestPointOnLineInput"
+          },
+          {
+            "$ref": "#/components/schemas/MeasureGeometryAlongInput"
+          }
+        ]
+      },
+      "MeasureGeometryOutput": {
+        "type": "object",
+        "description": "Typed geometry-operation result. The type value determines the data schema. See the focused tool specification for the complete output contract."
+      },
+      "MeasureGeometryToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for measure_geometry.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "measure_geometry"
+          },
+          "arguments": {
+            "description": "Arguments validated by the measure_geometry input schema.",
+            "$ref": "#/components/schemas/MeasureGeometryInput"
+          }
+        }
+      },
+      "MeasureGeometryToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the measure_geometry MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for measure_geometry.",
+            "$ref": "#/components/schemas/MeasureGeometryToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 16,
+            "method": "tools/call",
+            "params": {
+              "name": "measure_geometry",
+              "arguments": {
+                "operation": "area",
+                "geometry": {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        13.38,
+                        52.5
+                      ],
+                      [
+                        13.42,
+                        52.5
+                      ],
+                      [
+                        13.42,
+                        52.54
+                      ],
+                      [
+                        13.38,
+                        52.54
+                      ],
+                      [
+                        13.38,
+                        52.5
+                      ]
+                    ]
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "measure_geometry",
+        "x-geoapify-mcp-category": "Utilities",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/MeasureGeometryInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/MeasureGeometryOutput",
+        "x-geoapify-mcp-operations": [
+          {
+            "name": "area",
+            "description": "Calculate Polygon or MultiPolygon area in square meters.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryAreaInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryAreaOutput"
+            }
+          },
+          {
+            "name": "distance",
+            "description": "Calculate the distance between two points.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryDistanceInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryDistanceOutput"
+            }
+          },
+          {
+            "name": "length",
+            "description": "Calculate LineString or MultiLineString length.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryLengthInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryLengthOutput"
+            }
+          },
+          {
+            "name": "bbox",
+            "description": "Calculate a rectangular bounding-box Feature.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryBboxInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryBboxOutput"
+            }
+          },
+          {
+            "name": "point_to_line_distance",
+            "description": "Calculate the shortest distance from a point to a line.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryPointToLineDistanceInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryPointToLineDistanceOutput"
+            }
+          },
+          {
+            "name": "point_to_polygon_distance",
+            "description": "Calculate the shortest distance from a point to a polygon boundary.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryPointToPolygonDistanceInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryPointToPolygonDistanceOutput"
+            }
+          },
+          {
+            "name": "nearest_point_on_line",
+            "description": "Return the nearest point on a line to the supplied point.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryNearestPointOnLineInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryNearestPointOnLineOutput"
+            }
+          },
+          {
+            "name": "along",
+            "description": "Return the point at a distance from the start of a LineString.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryAlongInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/MeasureGeometryAlongOutput"
+            }
+          }
+        ]
+      },
+      "TransformGeometryBufferInput": {
+        "type": "object",
+        "title": "buffer",
+        "description": "Create a polygon around the geometry at the requested radius.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "distance"
+        ],
+        "properties": {
+          "operation": {
+            "const": "buffer",
+            "description": "Create a polygon around the geometry at the requested radius."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          },
+          "distance": {
+            "type": "number",
+            "description": "Buffer radius in the selected units."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "meters",
+              "metres",
+              "millimeters",
+              "millimetres",
+              "centimeters",
+              "centimetres",
+              "kilometers",
+              "kilometres",
+              "miles",
+              "nauticalmiles",
+              "inches",
+              "yards",
+              "feet",
+              "radians",
+              "degrees"
+            ],
+            "default": "kilometers",
+            "description": "Distance units. Defaults to kilometers."
+          },
+          "steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 128,
+            "default": 8,
+            "description": "Circular arc segments per quadrant."
+          }
+        }
+      },
+      "TransformGeometryBufferOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }` containing the buffer Polygon or MultiPolygon, or `{ \"type\": \"empty\", \"data\": null }` when no buffer geometry is produced."
+      },
+      "TransformGeometrySimplifyInput": {
+        "type": "object",
+        "title": "simplify",
+        "description": "Reduce geometry complexity while preserving its general shape.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "simplify",
+            "description": "Reduce geometry complexity while preserving its general shape."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          },
+          "tolerance": {
+            "type": "number",
+            "minimum": 0,
+            "default": 1,
+            "description": "Simplification tolerance."
+          },
+          "high_quality": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use the slower, higher-quality simplification algorithm."
+          }
+        }
+      },
+      "TransformGeometrySimplifyOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }` containing the simplified geometry."
+      },
+      "TransformGeometryRotateInput": {
+        "type": "object",
+        "title": "rotate",
+        "description": "Rotate the geometry clockwise by an angle in degrees.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "angle"
+        ],
+        "properties": {
+          "operation": {
+            "const": "rotate",
+            "description": "Rotate the geometry clockwise by an angle in degrees."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          },
+          "angle": {
+            "type": "number",
+            "description": "Clockwise rotation angle in degrees."
+          },
+          "pivot": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "prefixItems": [
+              {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180
+              },
+              {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90
+              }
+            ],
+            "items": false,
+            "description": "Optional [longitude, latitude] pivot. Defaults to the geometry centroid."
+          }
+        }
+      },
+      "TransformGeometryRotateOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }` containing the rotated geometry."
+      },
+      "TransformGeometryScaleInput": {
+        "type": "object",
+        "title": "scale",
+        "description": "Scale the geometry by a positive multiplier.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "factor"
+        ],
+        "properties": {
+          "operation": {
+            "const": "scale",
+            "description": "Scale the geometry by a positive multiplier."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          },
+          "factor": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Scale multiplier."
+          },
+          "origin": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "center",
+                  "centroid",
+                  "sw",
+                  "se",
+                  "nw",
+                  "ne"
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180
+                  },
+                  {
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90
+                  }
+                ],
+                "items": false
+              }
+            ],
+            "description": "Scale origin keyword or [longitude, latitude] position."
+          }
+        }
+      },
+      "TransformGeometryScaleOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }` containing the scaled geometry."
+      },
+      "TransformGeometryTranslateInput": {
+        "type": "object",
+        "title": "translate",
+        "description": "Move the geometry by a distance and compass direction.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry",
+          "distance",
+          "direction"
+        ],
+        "properties": {
+          "operation": {
+            "const": "translate",
+            "description": "Move the geometry by a distance and compass direction."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          },
+          "distance": {
+            "type": "number",
+            "description": "Translation distance in the selected units."
+          },
+          "direction": {
+            "type": "number",
+            "description": "Direction in decimal degrees, where 0 is north and 90 is east."
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "meters",
+              "metres",
+              "millimeters",
+              "millimetres",
+              "centimeters",
+              "centimetres",
+              "kilometers",
+              "kilometres",
+              "miles",
+              "nauticalmiles",
+              "inches",
+              "yards",
+              "feet",
+              "radians",
+              "degrees"
+            ],
+            "default": "kilometers",
+            "description": "Distance units. Defaults to kilometers."
+          },
+          "z_translation": {
+            "type": "number",
+            "description": "Optional translation applied to a third coordinate."
+          }
+        }
+      },
+      "TransformGeometryTranslateOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }` containing the translated geometry."
+      },
+      "TransformGeometryCenterInput": {
+        "type": "object",
+        "title": "center",
+        "description": "Return the center of the geometry bounding box.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "center",
+            "description": "Return the center of the geometry bounding box."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "TransformGeometryCenterOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }`; `data` is the Point Feature at the center of the geometry bounding box."
+      },
+      "TransformGeometryCenterMeanInput": {
+        "type": "object",
+        "title": "center_mean",
+        "description": "Return the arithmetic mean of all geometry vertices.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "center_mean",
+            "description": "Return the arithmetic mean of all geometry vertices."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "TransformGeometryCenterMeanOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }`; `data` is the Point Feature at the arithmetic mean of all vertices."
+      },
+      "TransformGeometryCenterMedianInput": {
+        "type": "object",
+        "title": "center_median",
+        "description": "Return the median center that minimizes total distance to the input vertices.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "center_median",
+            "description": "Return the median center that minimizes total distance to the input vertices."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "TransformGeometryCenterMedianOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }`; `data` is the median-center Point Feature."
+      },
+      "TransformGeometryCenterOfMassInput": {
+        "type": "object",
+        "title": "center_of_mass",
+        "description": "Return the centroid weighted by the geometry shape.",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "geometry"
+        ],
+        "properties": {
+          "operation": {
+            "const": "center_of_mass",
+            "description": "Return the centroid weighted by the geometry shape."
+          },
+          "geometry": {
+            "type": "object",
+            "description": "GeoJSON Geometry (Point, LineString, Polygon, MultiPoint, MultiLineString, or MultiPolygon); not a Feature or FeatureCollection."
+          }
+        }
+      },
+      "TransformGeometryCenterOfMassOutput": {
+        "type": "object",
+        "description": "Returns `{ \"type\": \"geojson\", \"data\": Feature }`; `data` is the center-of-mass Point Feature."
+      },
+      "TransformGeometryInput": {
+        "description": "Choose one transformation or center calculation. Each branch lists only the arguments accepted by that operation.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/TransformGeometryBufferInput"
+          },
+          {
+            "$ref": "#/components/schemas/TransformGeometrySimplifyInput"
+          },
+          {
+            "$ref": "#/components/schemas/TransformGeometryRotateInput"
+          },
+          {
+            "$ref": "#/components/schemas/TransformGeometryScaleInput"
+          },
+          {
+            "$ref": "#/components/schemas/TransformGeometryTranslateInput"
+          },
+          {
+            "$ref": "#/components/schemas/TransformGeometryCenterInput"
+          },
+          {
+            "$ref": "#/components/schemas/TransformGeometryCenterMeanInput"
+          },
+          {
+            "$ref": "#/components/schemas/TransformGeometryCenterMedianInput"
+          },
+          {
+            "$ref": "#/components/schemas/TransformGeometryCenterOfMassInput"
+          }
+        ]
+      },
+      "TransformGeometryOutput": {
+        "type": "object",
+        "description": "Typed geometry-operation result. The type value determines the data schema. See the focused tool specification for the complete output contract."
+      },
+      "TransformGeometryToolCallParams": {
+        "type": "object",
+        "description": "MCP tools/call params for transform_geometry.",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "description": "Registered MCP tool name.",
+            "const": "transform_geometry"
+          },
+          "arguments": {
+            "description": "Arguments validated by the transform_geometry input schema.",
+            "$ref": "#/components/schemas/TransformGeometryInput"
+          }
+        }
+      },
+      "TransformGeometryToolCallRequest": {
+        "type": "object",
+        "description": "JSON-RPC tools/call request for the transform_geometry MCP tool.",
+        "additionalProperties": false,
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "description": "JSON-RPC protocol version.",
+            "const": "2.0"
+          },
+          "id": {
+            "description": "Client-supplied JSON-RPC request id echoed in the response.",
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "method": {
+            "description": "MCP method used to call a tool.",
+            "const": "tools/call"
+          },
+          "params": {
+            "description": "Tool call parameters for transform_geometry.",
+            "$ref": "#/components/schemas/TransformGeometryToolCallParams"
+          }
+        },
+        "examples": [
+          {
+            "jsonrpc": "2.0",
+            "id": 22,
+            "method": "tools/call",
+            "params": {
+              "name": "transform_geometry",
+              "arguments": {
+                "operation": "buffer",
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [
+                    13.405,
+                    52.52
+                  ]
+                },
+                "distance": 500,
+                "units": "meters",
+                "steps": 16
+              }
+            }
+          }
+        ],
+        "x-geoapify-mcp-tool": "transform_geometry",
+        "x-geoapify-mcp-category": "Utilities",
+        "x-geoapify-mcp-input-schema": "#/components/schemas/TransformGeometryInput",
+        "x-geoapify-mcp-output-schema": "#/components/schemas/TransformGeometryOutput",
+        "x-geoapify-mcp-operations": [
+          {
+            "name": "buffer",
+            "description": "Create a polygon around the geometry at the requested radius.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryBufferInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryBufferOutput"
+            }
+          },
+          {
+            "name": "simplify",
+            "description": "Reduce geometry complexity while preserving its general shape.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/TransformGeometrySimplifyInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/TransformGeometrySimplifyOutput"
+            }
+          },
+          {
+            "name": "rotate",
+            "description": "Rotate the geometry clockwise by an angle in degrees.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryRotateInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryRotateOutput"
+            }
+          },
+          {
+            "name": "scale",
+            "description": "Scale the geometry by a positive multiplier.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryScaleInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryScaleOutput"
+            }
+          },
+          {
+            "name": "translate",
+            "description": "Move the geometry by a distance and compass direction.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryTranslateInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryTranslateOutput"
+            }
+          },
+          {
+            "name": "center",
+            "description": "Return the center of the geometry bounding box.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryCenterInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryCenterOutput"
+            }
+          },
+          {
+            "name": "center_mean",
+            "description": "Return the arithmetic mean of all geometry vertices.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryCenterMeanInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryCenterMeanOutput"
+            }
+          },
+          {
+            "name": "center_median",
+            "description": "Return the median center that minimizes total distance to the input vertices.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryCenterMedianInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryCenterMedianOutput"
+            }
+          },
+          {
+            "name": "center_of_mass",
+            "description": "Return the centroid weighted by the geometry shape.",
+            "inputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryCenterOfMassInput"
+            },
+            "outputSchema": {
+              "$ref": "#/components/schemas/TransformGeometryCenterOfMassOutput"
+            }
+          }
+        ]
+      },
+      "ToolCallErrorResponse": {
+        "type": "object",
+        "description": "JSON-RPC tools/call response when tool execution fails.",
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "const": "2.0"
+          },
+          "id": {
+            "$ref": "#/components/schemas/JsonRpcId"
+          },
+          "result": {
+            "type": "object",
+            "required": [
+              "content",
+              "isError"
+            ],
+            "properties": {
+              "content": {
+                "type": "array",
+                "description": "Tool error details represented as JSON text.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "text"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "text"
+                    },
+                    "text": {
+                      "type": "string",
+                      "description": "JSON-encoded GatewayError with statusCode, error, and message fields."
+                    }
+                  }
+                }
+              },
+              "isError": {
+                "const": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyInHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "Geoapify API key header. Recommended authentication method for MCP clients."
+      }
+    }
+  },
+  "x-geoapify-mcp-tool-index": "tools/index.json",
+  "security": [
+    {
+      "ApiKeyInHeader": []
+    }
+  ]
+}

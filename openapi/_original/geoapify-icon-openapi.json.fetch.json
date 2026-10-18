@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/map-marker/map-marker-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/map-marker/map-marker-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 11351,
+ "sha256": "150194a8ce4b65eb19f62c2a461952c0f955c784ad2d181fdd1b4792e7b2e039",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

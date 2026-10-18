@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/reverse-geocoding/reverse-geocoding-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/reverse-geocoding/reverse-geocoding-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 46961,
+ "sha256": "83143fff8d0a7e9a887ce85c12e6396995e2f37720c19fca5d442074a2fe60d1",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

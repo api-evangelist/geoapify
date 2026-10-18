@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/postcode/postcode-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/postcode/postcode-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 63843,
+ "sha256": "b3ebb2b4ca212c28b5f42de61ea4d3f6af9c04d4cd762a2fed7c8d59477c9f1c",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

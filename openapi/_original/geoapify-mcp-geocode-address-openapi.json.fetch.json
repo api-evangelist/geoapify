@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/geocode-address-openapi-spec.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/geocode-address-openapi-spec.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 28959,
+ "sha256": "a194da0c69b15f6828488d9ae2eba98b758fb3c2c707efe1833327951ab14cf3",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/map-tiles/map-tiles-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/map-tiles/map-tiles-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 189638,
+ "sha256": "bfd95409cac860e05b61d218bceaff8ddccaaeff2d98a917354ed49f76fa0beb",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

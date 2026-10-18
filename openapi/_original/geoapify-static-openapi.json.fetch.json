@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/static-maps/static-maps-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/static-maps/static-maps-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 44837,
+ "sha256": "6f4c0fba2430a6c8d60e6b5adbaf68cab2757fd2abb2f8d5b1938f80c8bd57e2",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

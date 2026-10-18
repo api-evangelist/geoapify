@@ -1,0 +1,523 @@
+openapi: 3.2.0
+info:
+  title: Geoapify Route Matrix API
+  version: 1.1.0
+  description: Calculate travel-time and distance matrices between source and target locations.
+servers:
+- url: https://api.geoapify.com/v1
+  description: Default API endpoint.
+- url: https://api-eu.geoapify.com/v1
+  description: EU-focused endpoint. Geoapify service processing uses EU infrastructure.
+security:
+- ApiKeyInQuery: []
+- ApiKeyInHeader: []
+tags:
+- name: Route Matrix
+paths:
+  /routematrix:
+    post:
+      tags:
+      - Route Matrix
+      operationId: calculateRouteMatrix
+      summary: Calculate a source-to-target route matrix
+      description: 'Calculates travel distances and times from every source to every target.
+
+
+        - Send a JSON body with `mode`, `sources`, and `targets`.
+
+        - Each `location` uses GeoJSON coordinate order: `[longitude, latitude]`.
+
+        - `sources_to_targets[i][j]` describes the route from `sources[i]` to `targets[j]`.
+
+        - Repeat the same locations in `sources` and `targets` to calculate a square all-to-all matrix.
+
+        - A regular API call supports up to 1,000 matrix cells (`sources.length × targets.length`).
+
+        - `distance` or `time` can be `null` when no route is available for a source-target pair.
+
+
+        **Example:** a 3 × 3 passenger-car matrix with `mode=drive`.'
+      requestBody:
+        required: true
+        description: Route Matrix configuration. The request body must be JSON.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteMatrixRequest'
+            example:
+              mode: drive
+              sources:
+              - location:
+                - -121.32485316561406
+                - 38.67387210503517
+              - location:
+                - -121.31172308967166
+                - 38.66553576111227
+              - location:
+                - -121.31533025339189
+                - 38.661141891975916
+              targets:
+              - location:
+                - -121.32485316561406
+                - 38.67387210503517
+              - location:
+                - -121.31172308967166
+                - 38.66553576111227
+              - location:
+                - -121.31533025339189
+                - 38.661141891975916
+      responses:
+        '200':
+          description: Matrix rows correspond to `sources`; columns correspond to `targets`. Distances use the requested unit system and times are in seconds.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteMatrixResponse'
+              example:
+                sources:
+                - original_location:
+                  - -121.32485316561406
+                  - 38.67387210503517
+                  location:
+                  - -121.324908
+                  - 38.673825
+                - original_location:
+                  - -121.31172308967166
+                  - 38.66553576111227
+                  location:
+                  - -121.311626
+                  - 38.665659
+                - original_location:
+                  - -121.31533025339189
+                  - 38.661141891975916
+                  location:
+                  - -121.31544
+                  - 38.661144
+                targets:
+                - original_location:
+                  - -121.32485316561406
+                  - 38.67387210503517
+                  location:
+                  - -121.324908
+                  - 38.673825
+                - original_location:
+                  - -121.31172308967166
+                  - 38.66553576111227
+                  location:
+                  - -121.311626
+                  - 38.665659
+                - original_location:
+                  - -121.31533025339189
+                  - 38.661141891975916
+                  location:
+                  - -121.31544
+                  - 38.661144
+                sources_to_targets:
+                - - distance: 0
+                    time: 0
+                    source_index: 0
+                    target_index: 0
+                  - distance: 3421
+                    time: 274
+                    source_index: 0
+                    target_index: 1
+                  - distance: 3279
+                    time: 251
+                    source_index: 0
+                    target_index: 2
+                - - distance: 2545
+                    time: 227
+                    source_index: 1
+                    target_index: 0
+                  - distance: 0
+                    time: 0
+                    source_index: 1
+                    target_index: 1
+                  - distance: 828
+                    time: 108
+                    source_index: 1
+                    target_index: 2
+                - - distance: 3239
+                    time: 239
+                    source_index: 2
+                    target_index: 0
+                  - distance: 828
+                    time: 102
+                    source_index: 2
+                    target_index: 1
+                  - distance: 0
+                    time: 0
+                    source_index: 2
+                    target_index: 2
+                units: metric
+                distance_units: meters
+                mode: drive
+        '400':
+          description: Invalid request data, an oversized matrix, or source-target distances that exceed gateway limits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              examples:
+                missingSources:
+                  summary: Missing required sources
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: '"sources" is required'
+                matrixTooLarge:
+                  summary: Matrix contains too many cells
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: Matrix is too big. Matrix size should not exceed 1000 elements for a regular API call, and 2000 elements for an asynchronous batch API call. Requested matrix size is 2500
+                routeTooLong:
+                  summary: A source-target distance exceeds the travel-mode limit
+                  description: This example uses `walk`, which allows 100 km for regular calls and 200 km for asynchronous batch calls.
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: Too long distance between locations. Distance should not exceed 100000 meters for a regular API call, and 200000 meters for an asynchronous batch API call. Estimated distance is 250000 meter(s).
+                sumDistanceTooLong:
+                  summary: Estimated total distance is too large
+                  value:
+                    statusCode: 400
+                    error: Bad Request
+                    message: Too long sum distance. Sum distance of all possible routes should not exceed 300000000 meters for a regular API call, and 1000000000 meters for an asynchronous batch API call. Estimated sum distance is 350000000 meter(s).
+        '401':
+          description: Missing or invalid Geoapify API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 401
+                error: Unauthorized
+                message: Invalid apiKey
+        '429':
+          description: Rate limit or quota exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 429
+                error: Too Many Requests
+                message: Quota exceeded
+        '500':
+          description: Internal gateway error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+              example:
+                statusCode: 500
+                error: Internal Server Error
+                message: Request failed, please try again later
+components:
+  schemas:
+    LocationData:
+      type: object
+      required:
+      - lat
+      - lon
+      properties:
+        lat:
+          type: number
+          minimum: -90
+          maximum: 90
+        lon:
+          type: number
+          minimum: -180
+          maximum: 180
+        address:
+          type: string
+    RouteMatrixResponse:
+      type: object
+      required:
+      - sources
+      - targets
+      - sources_to_targets
+      - units
+      - distance_units
+      - mode
+      properties:
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteMatrixLocation'
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteMatrixLocation'
+        sources_to_targets:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/RouteMatrixCell'
+        units:
+          type: string
+          enum:
+          - metric
+          - imperial
+        distance_units:
+          type: string
+          enum:
+          - meters
+          - miles
+        mode:
+          type: string
+          enum:
+          - walk
+          - hike
+          - scooter
+          - motorcycle
+          - drive
+          - light_truck
+          - bicycle
+          - mountain_bike
+          - road_bike
+          - bus
+          - medium_truck
+          - truck
+          - truck_dangerous_goods
+          - heavy_truck
+          - long_truck
+          - transit
+          - approximated_transit
+        type:
+          type: string
+          enum:
+          - balanced
+          - short
+          - less_maneuvers
+        max_speed:
+          type: number
+        avoid:
+          type: array
+          items:
+            $ref: '#/components/schemas/Avoid'
+        traffic:
+          type: string
+          enum:
+          - free_flow
+          - approximated
+    Avoid:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - tolls
+          - ferries
+          - highways
+          - locations
+          - polygons
+          - green_zones
+          - country_codes
+          - transfers
+        importance:
+          type: number
+          minimum: 0
+          maximum: 1
+        values:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: array
+            items:
+              $ref: '#/components/schemas/LocationData'
+          - type: array
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/LocationData'
+    MatrixLocation:
+      type: object
+      required:
+      - location
+      properties:
+        location:
+          type: array
+          minItems: 2
+          maxItems: 2
+          prefixItems:
+          - type: number
+            minimum: -180
+            maximum: 180
+            description: Longitude.
+          - type: number
+            minimum: -90
+            maximum: 90
+            description: Latitude.
+          items: false
+          description: 'Coordinate in GeoJSON order: `[longitude, latitude]`.'
+    RouteMatrixLocation:
+      type: object
+      required:
+      - original_location
+      properties:
+        original_location:
+          $ref: '#/components/schemas/LongitudeLatitude'
+        location:
+          $ref: '#/components/schemas/LongitudeLatitude'
+    RouteMatrixRequest:
+      type: object
+      required:
+      - mode
+      - sources
+      - targets
+      properties:
+        mode:
+          type: string
+          enum:
+          - walk
+          - hike
+          - scooter
+          - motorcycle
+          - drive
+          - light_truck
+          - bicycle
+          - mountain_bike
+          - road_bike
+          - bus
+          - medium_truck
+          - truck
+          - truck_dangerous_goods
+          - heavy_truck
+          - long_truck
+          example: drive
+          description: Travel profile used to calculate speeds, access rules, and road restrictions. `drive` represents a passenger car.
+        sources:
+          type: array
+          minItems: 1
+          maxItems: 1000
+          description: Origin locations. Each source produces one row in `sources_to_targets`.
+          items:
+            $ref: '#/components/schemas/MatrixLocation'
+        targets:
+          type: array
+          minItems: 1
+          maxItems: 1000
+          description: Destination locations. Each target produces one column in every `sources_to_targets` row.
+          items:
+            $ref: '#/components/schemas/MatrixLocation'
+        avoid:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - type
+            properties:
+              type:
+                type: string
+                enum:
+                - tolls
+                - ferries
+                - highways
+                - green_zones
+                - transfers
+                - locations
+                - polygons
+                - country_codes
+              importance:
+                type: number
+                minimum: 0
+                maximum: 1
+              values:
+                type: array
+                items: {}
+          maxItems: 100
+          description: Road features, locations, polygons, or countries the router should avoid. Each rule requires a `type`; `importance` ranges from 0 to 1.
+        traffic:
+          type: string
+          enum:
+          - free_flow
+          - approximated
+          default: free_flow
+          description: Traffic model for motorized modes. `free_flow` assumes uncongested roads; `approximated` reduces speeds on roads likely to be congested.
+        type:
+          type: string
+          enum:
+          - balanced
+          - short
+          - less_maneuvers
+          default: balanced
+          description: Route preference. `balanced` balances time and distance; `short` prioritizes distance; `less_maneuvers` penalizes turns.
+        max_speed:
+          type: number
+          minimum: 6.5
+          maximum: 252
+          example: 80
+          description: Maximum speed for driving, truck, and bus modes. Use 10–252 km/h with `units=metric`, or 6.5–155 mph with `units=imperial`.
+        units:
+          type: string
+          enum:
+          - metric
+          - imperial
+          default: metric
+          description: Unit system for matrix distances. `metric` returns meters; `imperial` returns miles.
+    RouteMatrixCell:
+      type: object
+      required:
+      - distance
+      - time
+      - source_index
+      - target_index
+      properties:
+        distance:
+          type:
+          - number
+          - 'null'
+        time:
+          type:
+          - number
+          - 'null'
+        source_index:
+          type: integer
+        target_index:
+          type: integer
+    LongitudeLatitude:
+      type: array
+      minItems: 2
+      maxItems: 2
+      prefixItems:
+      - type: number
+        minimum: -180
+        maximum: 180
+      - type: number
+        minimum: -90
+        maximum: 90
+      items: false
+    GatewayError:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code returned by the API gateway.
+        error:
+          type: string
+          description: Standard HTTP error name.
+        message:
+          type: string
+          description: Human-readable explanation of the error.
+  securitySchemes:
+    ApiKeyInQuery:
+      type: apiKey
+      in: query
+      name: apiKey
+      description: Geoapify API key query parameter. Recommended authentication method for public APIs. API keys in URLs can be logged; use x-api-key for server-to-server clients.
+    ApiKeyInHeader:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Geoapify API key header. Supported as an alternative authentication method for public APIs.

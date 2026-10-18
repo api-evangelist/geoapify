@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/isoline/isoline-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/isoline/isoline-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 70498,
+ "sha256": "6acaec8e0591a480b3f5de004baf53cd2a815ee02817fdf555e0f5e5e1ad0351",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}

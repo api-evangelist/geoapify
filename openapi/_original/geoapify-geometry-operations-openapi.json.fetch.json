@@ -1,0 +1,13 @@
+{
+ "url": "https://apidocs.geoapify.com/assets/openapi/specs/geometry-operations/geometry-operations-api-openapi-specs.json",
+ "requested_url": "https://apidocs.geoapify.com/assets/openapi/specs/geometry-operations/geometry-operations-api-openapi-specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 38975,
+ "sha256": "acf054aacc1fdde66635c6eb270b1d7cd8a6db924411a2bd30903fa46e5f826c",
+ "fetched_at": "2026-10-18",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "found_on": "https://apidocs.geoapify.com/assets/openapi/specs/index.json",
+ "note": "listed in Geoapify's own OpenAPI catalog (roadmap#970)"
+}
