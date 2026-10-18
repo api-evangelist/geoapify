@@ -285,6 +285,8 @@ apis:
   humanURL: https://apidocs.geoapify.com/docs/postcode/
   baseURL: https://maps.geoapify.com/maptiles
   tags:
+  - Postcode
+  tags_raw:
   - Post Code
   properties:
   - type: OpenAPI
