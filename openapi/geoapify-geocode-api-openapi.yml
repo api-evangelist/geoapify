@@ -242,3 +242,9 @@ paths:
       - Geocode
       operationId: getGeocodeSearch
       x-operation-id-source: derived
+x-provenance:
+  method: harvested
+  publisher: Geoapify
+  source: https://apidocs.geoapify.com/assets/openapi/specs/forward-geocoding/forward-geocoding-api-openapi-specs.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

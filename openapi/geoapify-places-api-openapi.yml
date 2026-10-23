@@ -3252,3 +3252,9 @@ components:
       in: header
       name: x-api-key
       description: Geoapify API key header. Supported as an alternative authentication method for public APIs.
+x-provenance:
+  method: harvested
+  publisher: Geoapify
+  source: https://apidocs.geoapify.com/assets/openapi/specs/places/places-api-openapi-specs.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
