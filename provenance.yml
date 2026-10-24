@@ -24,130 +24,16 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/geoapify-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
   json-structure/geoapify-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -231,17 +117,224 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   llms/geoapify-llms-probe.yml:
     method: searched
     evidence: 'derive-llms-provenance.py: harvested'
   mcp/geoapify-mcp.yml:
     method: unknown
     evidence: no authorship recorded
+  openapi/_original/geoapify-address-autocomplete-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/address-autocomplete/address-autocomplete-api-openapi-specs.json
+      (sha256 1b511801a41e, fetched 2026-10-18)
+  openapi/_original/geoapify-batch-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/batch-geocoding/batch-geocoding-api-openapi-specs.json
+      (sha256 04319abbf142, fetched 2026-10-18)
+  openapi/_original/geoapify-boundaries-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/boundaries/boundaries-api-openapi-specs.json
+      (sha256 835cade8d8b2, fetched 2026-10-18)
+  openapi/_original/geoapify-elevation-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/elevation/elevation-api-openapi-specs.json
+      (sha256 9743b8f605d4, fetched 2026-10-18)
   openapi/_original/geoapify-forward-geocoding-api-openapi.yml:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: the same operations as https://raw.githubusercontent.com/geoapify/geoapify-openapi-specs/HEAD/api-specs/forward-geocoding/forward-geocoding-api-openapi-specs.json
+      (sha256 3ccf6ac2d51a, fetched 2026-10-04)
+  openapi/_original/geoapify-forward-geocoding-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/forward-geocoding/forward-geocoding-api-openapi-specs.json
+      (sha256 3ccf6ac2d51a, fetched 2026-10-18)
+  openapi/_original/geoapify-geometry-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/geometry/geometry-api-openapi-specs.json
+      (sha256 48bfc002f948, fetched 2026-10-18)
+  openapi/_original/geoapify-geometry-operations-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/geometry-operations/geometry-operations-api-openapi-specs.json
+      (sha256 acf054aacc1f, fetched 2026-10-18)
+  openapi/_original/geoapify-icon-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/map-marker/map-marker-api-openapi-specs.json
+      (sha256 150194a8ce4b, fetched 2026-10-18)
+  openapi/_original/geoapify-ip-geolocation-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/ip-geolocation/ip-geolocation-api-openapi-specs.json
+      (sha256 1a246552c9f1, fetched 2026-10-18)
+  openapi/_original/geoapify-isolines-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/isoline/isoline-api-openapi-specs.json
+      (sha256 6acaec8e0591, fetched 2026-10-18)
+  openapi/_original/geoapify-map-matching-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/map-matching/map-matching-api-openapi-specs.json
+      (sha256 beefdc711a63, fetched 2026-10-18)
+  openapi/_original/geoapify-map-tiles-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/map-tiles/map-tiles-api-openapi-specs.json
+      (sha256 bfd95409cac8, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-calculate-route-matrix-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/calculate-route-matrix-openapi-spec.json
+      (sha256 5060b2d81531, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-calculate-route-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/calculate-route-openapi-spec.json
+      (sha256 2ba2cdd4d8bf, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-combine-geometries-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/combine-geometries-openapi-spec.json
+      (sha256 a701db9232f3, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-evaluate-spatial-relation-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/evaluate-spatial-relation-openapi-spec.json
+      (sha256 8739086cf6fc, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-geocode-address-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/geocode-address-openapi-spec.json
+      (sha256 a194da0c69b1, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-geocode-structured-address-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/geocode-structured-address-openapi-spec.json
+      (sha256 8cfb6e7bc95c, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-list-place-categories-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/list-place-categories-openapi-spec.json
+      (sha256 3f26d70bc687, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-mcp-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/mcp-api-openapi-specs.json
+      (sha256 01fb5bc34c34, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-measure-geometry-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/measure-geometry-openapi-spec.json
+      (sha256 14b654542531, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-reverse-geocode-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/reverse-geocode-coordinates-openapi-spec.json
+      (sha256 675e1b968c7a, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-search-places-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/search-places-openapi-spec.json
+      (sha256 f304fe858adf, fetched 2026-10-18)
+  openapi/_original/geoapify-mcp-transform-geometry-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/mcp/tools/transform-geometry-openapi-spec.json
+      (sha256 7ba47145bb99, fetched 2026-10-18)
+  openapi/_original/geoapify-place-details-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/place-details/place-details-api-openapi-specs.json
+      (sha256 abc827ffde68, fetched 2026-10-18)
+  openapi/_original/geoapify-place-info-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/place-info/place-info-api-openapi-specs.json
+      (sha256 d4917bb77de0, fetched 2026-10-18)
+  openapi/_original/geoapify-places-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/places/places-api-openapi-specs.json
+      (sha256 21eb86d0fb7c, fetched 2026-10-18)
+  openapi/_original/geoapify-postcode-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/postcode/postcode-api-openapi-specs.json
+      (sha256 b3ebb2b4ca21, fetched 2026-10-18)
+  openapi/_original/geoapify-reverse-geocoding-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/reverse-geocoding/reverse-geocoding-api-openapi-specs.json
+      (sha256 83143fff8d0a, fetched 2026-10-18)
+  openapi/_original/geoapify-route-matrix-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/route-matrix/route-matrix-api-openapi-specs.json
+      (sha256 3d665e68b6b1, fetched 2026-10-18)
+  openapi/_original/geoapify-route-planner-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/route-planner/route-planner-api-openapi-specs.json
+      (sha256 d02d652acc8e, fetched 2026-10-18)
+  openapi/_original/geoapify-routing-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/routing/routing-api-openapi-specs.json
+      (sha256 3befa20ade08, fetched 2026-10-18)
+  openapi/_original/geoapify-static-openapi.json:
+    method: harvested
+    evidence: byte-identical to https://apidocs.geoapify.com/assets/openapi/specs/static-maps/static-maps-api-openapi-specs.json
+      (sha256 6f4c0fba2430, fetched 2026-10-18)
+  openapi/geoapify-address-autocomplete-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-batch-geocoding-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-boundaries-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-elevation-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/geoapify-geocode-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-geometry-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-geometry-operations-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-ip-geolocation-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-isoline-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-map-marker-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-map-matching-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-map-tiles-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-place-details-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-place-info-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-places-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-post-code-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-reverse-geocoding-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-route-matrix-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-route-planner-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-routing-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/geoapify-static-maps-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   plans/geoapify-plans-pricing.yml:
@@ -250,6 +343,9 @@ artifacts:
   rate-limits/geoapify-rate-limits.yml:
     method: generated
     evidence: declared in the artifact
+  rules/geoapify-geoapify-openapi-specs-spectral-rules.yml:
+    method: harvested
+    evidence: https://github.com/geoapify/geoapify-openapi-specs/blob/e8255e614648084d86bae2155c20347d5203ec1d/ruleset.spectral.yaml
   security/geoapify-domain-security.yml:
     method: unknown
     evidence: no authorship recorded
