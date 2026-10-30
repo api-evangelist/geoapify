@@ -1,4 +1,4 @@
-# Geoapify (geoapify)
+# Geoapify
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,212 +66,146 @@
 
 Geoapify Location Platform APIs for location-based services and mapping solutions.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/geoapify/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/geoapify/refs/heads/main/apis.yml)
+**Areas:** Geocoding · Geospatial · Location · Maps
 
-## Scope
+## Geoapify on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Geoapify is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/geoapify/](https://apis.io/providers/geoapify/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (10)
 
-- Geocoding
-- Geospatial
-- Location
-- Maps
+- [Map Tiles API](https://apis.io/apis/geoapify/map-tiles/) — Retrieve map tiles for various types and styles.
+- [Static Maps API](https://apis.io/apis/geoapify/static-maps/) — Generate static map images for embedding in applications.
+- [Reverse Geocoding API](https://apis.io/apis/geoapify/reverse-geocoding/) — Convert geographic coordinates into addresses.
+- [Address Autocomplete API](https://apis.io/apis/geoapify/address-autocomplete/) — Address autocomplete suggestions for search fields.
+- [IP Geolocation API](https://apis.io/apis/geoapify/ip-geolocation/) — Identify the location of an IP address.
+- [Routing API](https://apis.io/apis/geoapify/routing/) — Provides routing directions between multiple points.
+- [Places API](https://apis.io/apis/geoapify/places/) — Discover places based on various categories and parameters.
+- [Boundaries API](https://apis.io/apis/geoapify/boundaries/) — Retrieve boundary data for administrative regions.
+- [Isoline API](https://apis.io/apis/geoapify/isoline/) — Generate isolines to represent reachable areas.
+- [Geoapify Geocode API](https://apis.io/apis/geoapify/geoapify-geocode-api/) — The Geocode API from Geoapify — 1 operation(s) for geocode.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-01-01
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Map Tiles API
+Model Context Protocol servers that expose the API to agents.
 
-Retrieve map tiles for various types and styles.
+- [MCP Server](https://apis.io/servers/geoapify/mcp-server/)
 
-- **Human URL:** [https://apidocs.geoapify.com/maps/map-tiles](https://apidocs.geoapify.com/maps/map-tiles)
-- **Base URL:** `https://maps.geoapify.com/maptiles`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Maps
+- [Geoapify Agentic Access](https://apis.io/agentic-access/geoapify/geoapify-agentic-access/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://apidocs.geoapify.com/maps/map-tiles)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-### Static Maps API
+- [Geoapify Structure](https://apis.io/json-structure/geoapify/geoapify-structure/)
 
-Generate static map images for embedding in applications.
+#### Collections (2)
 
-- **Human URL:** [https://apidocs.geoapify.com/maps/static-maps-api](https://apidocs.geoapify.com/maps/static-maps-api)
-- **Base URL:** `https://maps.geoapify.com/staticmap`
+Postman and Open Collection request collections.
 
-#### Tags
+- [Geoapify Forward Geocoding API](https://apis.io/collections/geoapify/open-geoapify-forward-geocoding-api/)
+- [Geoapify Forward Geocoding Geocode API](https://apis.io/collections/geoapify/open-geoapify-geocode-api/)
 
-- Maps
+#### Governance rules (1)
 
-#### Properties
+Spectral rulesets for the provider's contracts.
 
-- [Documentation](https://apidocs.geoapify.com/maps/static-maps-api)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Geoapify — geoapify openapi specs rules](https://apis.io/rules/geoapify/geoapify-geoapify-openapi-specs-spectral-rules/)
 
-### Forward Geocoding API
+#### Security (1)
 
-Convert addresses into geographic coordinates.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://apidocs.geoapify.com/addresses-location/forward-geocoding-api](https://apidocs.geoapify.com/addresses-location/forward-geocoding-api)
-- **Base URL:** `https://api.geoapify.com/geocode/search`
+- [Geoapify Domain Security](https://apis.io/security/geoapify/geoapify-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Geocoding
+Published plans, tiers and prices.
 
-#### Properties
+- [Geoapify Plans Pricing](https://apis.io/plans/geoapify/geoapify-plans-pricing/)
 
-- [Documentation](https://apidocs.geoapify.com/addresses-location/forward-geocoding-api)
-- [OpenAPI](openapi/geoapify-forward-geocoding-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Reverse Geocoding API
+Published request limits.
 
-Convert geographic coordinates into addresses.
+- [Geoapify Rate Limits](https://apis.io/rate-limits/geoapify/geoapify-rate-limits/)
 
-- **Human URL:** [https://apidocs.geoapify.com/addresses-location/reverse-geocoding-api](https://apidocs.geoapify.com/addresses-location/reverse-geocoding-api)
-- **Base URL:** `https://api.geoapify.com/geocode/reverse`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Geocoding
+- [Geoapify Finops](https://apis.io/finops/geoapify/geoapify-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://apidocs.geoapify.com/addresses-location/reverse-geocoding-api)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Address Autocomplete API
-
-Address autocomplete suggestions for search fields.
-
-- **Human URL:** [https://apidocs.geoapify.com/addresses-location/address-autocomplete](https://apidocs.geoapify.com/addresses-location/address-autocomplete)
-- **Base URL:** `https://api.geoapify.com/geocode/autocomplete`
-
-#### Tags
-
-- Geocoding
-
-#### Properties
-
-- [Documentation](https://apidocs.geoapify.com/addresses-location/address-autocomplete)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### IP Geolocation API
-
-Identify the location of an IP address.
-
-- **Human URL:** [https://apidocs.geoapify.com/addresses-location/ip-geolocation-api](https://apidocs.geoapify.com/addresses-location/ip-geolocation-api)
-- **Base URL:** `https://api.geoapify.com/geocode/ip`
-
-#### Tags
-
-- Geolocation
-
-#### Properties
-
-- [Documentation](https://apidocs.geoapify.com/addresses-location/ip-geolocation-api)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Routing API
-
-Provides routing directions between multiple points.
-
-- **Human URL:** [https://apidocs.geoapify.com/routes-optimization/routing-api](https://apidocs.geoapify.com/routes-optimization/routing-api)
-- **Base URL:** `https://api.geoapify.com/routing`
-
-#### Tags
-
-- Routing
-
-#### Properties
-
-- [Documentation](https://apidocs.geoapify.com/routes-optimization/routing-api)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Places API
-
-Discover places based on various categories and parameters.
-
-- **Human URL:** [https://apidocs.geoapify.com/places-details/places-api](https://apidocs.geoapify.com/places-details/places-api)
-- **Base URL:** `https://api.geoapify.com/places`
-
-#### Tags
-
-- Places
-
-#### Properties
-
-- [Documentation](https://apidocs.geoapify.com/places-details/places-api)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Boundaries API
-
-Retrieve boundary data for administrative regions.
-
-- **Human URL:** [https://apidocs.geoapify.com/boundaries/about-boundaries-api](https://apidocs.geoapify.com/boundaries/about-boundaries-api)
-- **Base URL:** `https://api.geoapify.com/boundaries`
-
-#### Tags
-
-- Boundaries
-
-#### Properties
-
-- [Documentation](https://apidocs.geoapify.com/boundaries/about-boundaries-api)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Isoline API
-
-Generate isolines to represent reachable areas.
-
-- **Human URL:** [https://apidocs.geoapify.com/reachability/isolines](https://apidocs.geoapify.com/reachability/isolines)
-- **Base URL:** `https://api.geoapify.com/isolines`
-
-#### Tags
-
-- Reachability
-
-#### Properties
-
-- [Documentation](https://apidocs.geoapify.com/reachability/isolines)
-- [Postman Collection](collections/geoapify-forward-geocoding-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/geoapify-forward-geocoding-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/geoapify)
-- [LinkedIn](https://www.linkedin.com/company/geoapify)
 - [Website](https://www.geoapify.com/)
 - [Documentation](https://apidocs.geoapify.com/)
-- [Sign Up](https://myprojects.geoapify.com/register)
-- [Terms of Service](https://www.geoapify.com/terms)
-- [Privacy Policy](https://www.geoapify.com/privacy)
-- [Features](undefined)
-- [L L Ms Txt](https://apidocs.geoapify.com/llms.txt)
+- [Blog](https://www.geoapify.com/rss.xml)
+- [Terms of service](https://www.geoapify.com/terms)
+- [Privacy policy](https://www.geoapify.com/privacy)
+- [GitHub](https://github.com/geoapify)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 26.0** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 63.3 |
+| Contract quality | 52.6 |
+| Contract governance | 15.2 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 2.4 |
+| Access clarity | 21.1 |
+
+**Agent readiness 42.9** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 5.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/geoapify/](https://apis.io/providers/geoapify/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Geoapify: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/geoapify/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
